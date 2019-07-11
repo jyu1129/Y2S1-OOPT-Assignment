@@ -3,10 +3,10 @@
 
 ### TODO:
 #### POS System
-- [ ] Login
+- [x] Login
   - [x] Function
   - [x] Design
-  - [ ] Login for Manager
+  - [x] Login for Manager
 - [ ] Sales Order
   - [x] Function
   - [x] Design
