@@ -9,11 +9,14 @@ public class Main {
         int menuOption;
         Staff[] staff = new Staff[max_number];
         Product[] product = new Product[max_number];
+        Jobs[] job = new Jobs[max_number];
 
         Branches branch = new Branches("Kuala Lumpur","M001");
-        Jobs job = new Jobs("Cashier");
-        staff[0]= new Staff("abc123","Martin","Gary",'M',"0123456789","mtg@email.com","001230127890",job,branch);
-        staff[1]= new Staff("cba321", "Gregor","Clegane",'M',"0123226545","gc1@email.com","000123141331",job,branch);
+        job[0] = new Jobs("Cashier");
+        job[1] = new Jobs("Manager");
+        staff[0]= new Staff("abc123","Martin","Gary",'M',"0123456789","mtg@email.com","001230127890",job[0],branch);
+        staff[1]= new Staff("cba321", "Gregor","Clegane",'M',"0123226545","gc1@email.com","000123141331",job[0],branch);
+        staff[2] = new Staff("qwe123", "Jon", "Snow", 'M',"01112806671","js1@gmal.com","901011141221",job[1],branch);
         product[0] = new Product ("Alpo Dog Food","Dog Food", 10,60.00, 10);
         product[1] = new Product ("Pedigree Dog Food","Dog Food", 10,50.00, 10);
         product[2] = new Product ("Merrick Dog Food","Dog Food", 10,90.00, 10);
@@ -26,14 +29,17 @@ public class Main {
             System.out.println("Menu Options");
             System.out.println("------------");
             System.out.println("1. Sales Order");
+            System.out.println("2. Manager?");
             System.out.println("0. Exit");
             System.out.print("> ");
 
             menuOption = scanner.nextInt();
-
             switch (menuOption) {
                 case 1:
                     salesOrderProcess(product);
+                    break;
+                case 2:
+                    isManager(staff[staffArr].getJobs().getJobTitle());
                     break;
                 case 0:
                     System.exit(0);
@@ -121,6 +127,14 @@ public class Main {
             System.out.printf("%-30s%-9d%-7.2f%-7.2f\n", product[i].getProductName(), product[i].getQuantityOrdered(), product[i].getPrice(), product[i].getPrice() * product[i].getQuantityOrdered());
             product[i].setQuantityOrdered(0);
             product[i].setNextQuantityOrdered(1);
+        }
+    }
+
+    private static void isManager(String isManagerOrNot){
+        if("Manager".equals(isManagerOrNot)){
+            System.out.println("You are a manager!!!!");
+        }else{
+            System.out.println("You are not a manager!!! Get out!!!");
         }
     }
 }
