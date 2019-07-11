@@ -58,10 +58,10 @@ public class Main {
         System.out.println("----------");
 
         do {
-            System.out.print("Username:");
+            System.out.print("Username: ");
             username = scanner.nextLine();
 
-            System.out.print("Password:");
+            System.out.print("Password: ");
             password = scanner.nextLine();
 
             for (int i = 0; i < Staff.getStaffNo(); i++) {
@@ -90,7 +90,7 @@ public class Main {
         int counter = 0;
         String barcode;
         do {
-            System.out.print("Enter Barcode(1 to continue)> ");
+            System.out.print("Enter Barcode(1 to checkout)> ");
             barcode = scanner.nextLine();
 
             for (int i = 0; i < Product.getProductNo(); i++) {
