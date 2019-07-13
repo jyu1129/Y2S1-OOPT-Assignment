@@ -7,29 +7,28 @@
   - [x] Function
   - [x] Design
   - [x] Login for Manager
-- [ ] Sales Order
-  - [x] Function
-  - [x] Design
-  - [ ] Daily Summary
-  - [ ] Search Product
-  - [ ] Transaction History
-- [ ] Attendance System
-  - [ ] Function
-- [ ] Bootup Screen (Logo & Welcome message)
-- [ ] Membership
-  - [ ] Add member
-  - [ ] Discount for member
+- [ ] Staff
+  - [ ] Sales Order(Yu Poh Shun)
+    - [x] Function
+    - [x] Design
+    - [ ] Search Product
+  - [ ] Attendance System(Yee Jun Hoong)
+    - [ ] Function
+    - [ ] Attendance history
+  - [ ] Membership(Yu Poh Shun)
+    - [ ] Add and update member
+    - [ ] Discount for member
+- [ ] Bootup (Logo & Welcome message) (Tan Qun Yih)
+
 
 #### Manager
-- [ ] Staff
-  - [ ] Add Staff
-  - [ ] Search Staff
-  - [ ] Modify Staff
-  - [ ] Delete Staff
-- [ ] Product
-  - [ ] Add Product
-  - [ ] Search Product
-  - [ ] Modify Product
-  - [ ] Delete Product
+- [ ] Staff(Ng Jing Kai)
+  - [ ] Add update Staff 
+- [ ] Product(Ng Jing Kai)
+  - [ ] Add and update Product
+- [ ] Reports (Tan Qun Yih)
+  - [ ] Daily Summary
+  - [ ] Transaction History
+- [ ] Promotion (Ng Jing Kai)
   
 
