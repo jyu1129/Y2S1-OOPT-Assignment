@@ -2,6 +2,9 @@
 ## DCO2 Group 2 sohi
 
 ### TODO:
+
+#### - [ ] UML Diagram
+
 #### POS System
 - [x] Login
   - [x] Function
