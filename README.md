@@ -3,7 +3,7 @@
 
 ### TODO:
 
-#### - [ ] UML Diagram
+- [ ] UML Diagram
 
 #### POS System
 - [x] Login
