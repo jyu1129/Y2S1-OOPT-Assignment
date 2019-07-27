@@ -1,4 +1,4 @@
-public class Product {
+class Product {
     //Variables
     private static int productNo = 0;
     private static int nextProductId = 1;

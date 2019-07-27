@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -6,81 +5,55 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+
         int menuOption;
-        Staff[] staff = new Staff[max_number];
-        Product[] product = new Product[max_number];
-        Jobs[] job = new Jobs[max_number];
+        int empOrManager;
+        boolean back = false;
 
-        Branches branch = new Branches("Kuala Lumpur","M001");
-        job[0] = new Jobs("Cashier");
-        job[1] = new Jobs("Manager");
-        staff[0]= new Staff("abc123","Martin","Gary",'M',"0123456789","mtg@email.com","001230127890",job[0],branch);
-        staff[1]= new Staff("cba321", "Gregor","Clegane",'M',"0123226545","gc1@email.com","000123141331",job[0],branch);
-        staff[2] = new Staff("qwe123", "Jon", "Snow", 'M',"01112806671","js1@gmal.com","901011141221",job[1],branch);
-        product[0] = new Product ("Alpo Dog Food","Dog Food", 10,60.00, 10);
-        product[1] = new Product ("Pedigree Dog Food","Dog Food", 10,50.00, 10);
-        product[2] = new Product ("Merrick Dog Food","Dog Food", 10,90.00, 10);
+        PersonDetails[] person = new PersonDetails[max_number];
+        Manager[] managers = new Manager[max_number];
+        Branch[] branches = new Branch[max_number];
+        Employee[] employees = new Employee[max_number];
+        Product[] products = new Product[max_number];
 
-        //Obtain array element of staff
-        int staffArr = login(staff);
+        person[0] = new PersonDetails("Martin","Gary",'M',"0123456789","mtg@email.com","001230127890");
+        managers[0] = new Manager("Manager", person[0], "abc123");
+        branches[0] = new Branch("Petaling Jaya", managers[0]);
 
-        System.out.println("Staff ID: " + staff[staffArr].getStaffId() + "\nStaff Name: " + staff[staffArr].getFirstName() + " " + staff[staffArr].getLastName());
+        person[1] = new PersonDetails("Gregor","Clegane",'M',"0123226545","gc1@email.com","000123141331");
+        employees[0]= new Employee("Cashier", person[1], "cba321", branches[0]);
+
+        person[2] = new PersonDetails("Jon", "Snow", 'M',"01112806671","js1@gmal.com","901011141221");
+        employees[1] = new Employee("Cashier", person[2], "qwe123", branches[0]);
+
+        products[0] = new Product ("Alpo Dog Food","Dog Food", 10,60.00, 10);
+        products[1] = new Product ("Pedigree Dog Food","Dog Food", 10,50.00, 10);
+        products[2] = new Product ("Merrick Dog Food","Dog Food", 10,90.00, 10);
+
         do {
-            System.out.println("Menu Options");
-            System.out.println("------------");
-            System.out.println("1. Sales Order");
-            System.out.println("2. Manager?");
+            System.out.println("Employee or Manager");
+            System.out.println("-------------------");
+            System.out.println("1. Employee");
+            System.out.println("2. Manager");
             System.out.println("0. Exit");
             System.out.print("> ");
 
-            menuOption = scanner.nextInt();
-            switch (menuOption) {
+            empOrManager = scanner.nextInt();
+            switch (empOrManager) {
                 case 1:
-                    salesOrderProcess(product);
+                    Login employeeLogin = new Login(employees);
                     break;
                 case 2:
-                    isManager(staff[staffArr].getJobs().getJobTitle());
+                    Login managerLogin = new Login(managers);
                     break;
                 case 0:
                     System.exit(0);
-                    break;
                 default:
                     System.out.println("No such option!");
                     break;
             }
         }while(true);
     }
-
-    /*1. Implement a login() method, which ask the user for username and password and return the staff array element.
-     The system will compare the username and password with Staff ID and Password in array of object in Staff class and
-     obtain the staff array element by using for loop. If an invalid username or password is entered, continue to prompt
-     for valid login details.*/
-    private static int login(Staff[] staff) {
-        Scanner scanner = new Scanner(System.in);
-        String username;
-        String password;
-
-        System.out.println("Login Page");
-        System.out.println("----------");
-
-        do {
-            System.out.print("Username:");
-            username = scanner.nextLine();
-
-            System.out.print("Password:");
-            password = scanner.nextLine();
-
-            for (int i = 0; i < Staff.getStaffNo(); i++) {
-                if (staff[i].getStaffId().equals(username) && staff[i].getPassword().equals(password)) {
-                    System.out.println("Log in successful.\n");
-                    return i;
-                } else if (i == Staff.getStaffNo() - 1 ) {
-                    System.out.println("Wrong username or password.\n");
-                }
-            }
-        }while (true) ;
-    }
-
 
     /*2. Implement the salesOrderProcess(), which represent the barcode scanner function that scan the barcode of the
     product and automatically add the product list on the sales order screen and do the calculation of the products

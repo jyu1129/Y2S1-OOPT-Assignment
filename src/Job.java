@@ -1,11 +1,11 @@
-public class Jobs {
+class Job {
     //Variables
     private static int nextJobId = 1;
-    private String jobId;
-    private String jobTitle;
+    protected String jobId;
+    protected String jobTitle;
 
     //Constructor
-    public Jobs(String jobTitle) {
+    public Job(String jobTitle) {
         this.jobId = String.format("J%02d",nextJobId++);
         this.jobTitle = jobTitle;
     }
@@ -24,7 +24,7 @@ public class Jobs {
         this.jobTitle = jobTitle;
     }
 
-    //Methods
+    @Override
     public String toString() {
         return "\nJob ID: " + jobId +
                 "\nJob Title: " + jobTitle;

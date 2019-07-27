@@ -21,11 +21,11 @@
   - [ ] Discount for member
 
 #### Manager
-- [ ] Staff
-  - [ ] Add Staff
-  - [ ] Search Staff
-  - [ ] Modify Staff
-  - [ ] Delete Staff
+- [ ] Employee
+  - [ ] Add Employee
+  - [ ] Search Employee
+  - [ ] Modify Employee
+  - [ ] Delete Employee
 - [ ] Product
   - [ ] Add Product
   - [ ] Search Product
