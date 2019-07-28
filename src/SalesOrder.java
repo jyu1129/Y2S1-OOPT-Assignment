@@ -1,9 +1,9 @@
 import java.util.Scanner;
 
 class SalesOrder {
-    private Scanner scanner = new Scanner(System.in);
 
     public SalesOrder(Product[] products){
+        Scanner scanner = new Scanner(System.in);
         int mostLeftElement = 0;
         int counter = 0;
         String barcode;
