@@ -6,6 +6,9 @@ class Branch {
     private Manager manager;
 
     //Constructor
+    public Branch() {
+    }
+
     public Branch(String branchName, Manager manager) {
         this.branchId = String.format("B%02d",nextBranchId++);
         this.branchName = branchName;

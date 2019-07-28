@@ -1,9 +1,12 @@
 import java.util.Scanner;
 
-public class MenuOptions {
+class MenuOptions {
     private Scanner scanner = new Scanner(System.in);
 
-    public boolean employeeMenuOptions(){
+    public MenuOptions() {
+    }
+
+    public void employeeMenuOptions(Product[] products){
 
         int menuOption;
 
@@ -18,9 +21,10 @@ public class MenuOptions {
             menuOption = scanner.nextInt();
             switch (menuOption) {
                 case 1:
+                    SalesOrder salesOrder = new SalesOrder(products);
                     break;
                 case 2:
-                    return true;
+                    break;
                 case 0:
                     System.exit(0);
                     break;
@@ -28,10 +32,10 @@ public class MenuOptions {
                     System.out.println("No such option!");
                     break;
             }
-        } while (true);
+        } while (menuOption != 2);
     }
 
-    public boolean managerMenuOptions(){
+    public void managerMenuOptions(){
 
         int menuOption;
 
@@ -47,11 +51,13 @@ public class MenuOptions {
             menuOption = scanner.nextInt();
             switch (menuOption) {
                 case 1:
+                    System.out.println("special~");
                     break;
                 case 2:
+                    System.out.println("special~~~~");
                     break;
                 case 3:
-                    return true;
+                    break;
                 case 0:
                     System.exit(0);
                     break;
@@ -59,6 +65,6 @@ public class MenuOptions {
                     System.out.println("No such option!");
                     break;
             }
-        } while (true);
+        } while (menuOption != 3);
     }
 }

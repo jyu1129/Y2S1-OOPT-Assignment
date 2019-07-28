@@ -5,6 +5,9 @@ class Job {
     protected String jobTitle;
 
     //Constructor
+    public Job() {
+    }
+
     public Job(String jobTitle) {
         this.jobId = String.format("J%02d",nextJobId++);
         this.jobTitle = jobTitle;

@@ -5,75 +5,54 @@ import java.util.Scanner;
  obtain the employees array element by using for loop. If an invalid username or password is entered, continue to prompt
  for valid login details.*/
 class Login {
-    private Scanner scanner = new Scanner(System.in);
     private MenuOptions menuOptions = new MenuOptions();
+    private String username;
+    private String password;
+    private int i;
 
-    public Login(Employee[] employeesArray) {
-        Employee[] employees = new Employee[Employee.getEmployeeNo()];
-        System.arraycopy(employeesArray, 0, employees, 0, Employee.getEmployeeNo());
-
-        String username;
-        String password;
-        int i;
-        boolean back = false;
+    public Login() {
+        Scanner scanner = new Scanner(System.in);
 
         System.out.println("Login Page");
         System.out.println("----------");
 
-        do {
-            System.out.print("Username: ");
-            username = scanner.nextLine();
+        System.out.print("Username: ");
+        username = scanner.nextLine();
 
-            System.out.print("Password: ");
-            password = scanner.nextLine();
+        System.out.print("Password: ");
+        password = scanner.nextLine();
+    }
 
-            for (i = 0; i < Employee.getEmployeeNo(); i++) {
-                if (employees[i].getEmployeeID().equals(username) && employees[i].getPassword().equals(password)) {
-                    System.out.println("Log in successful.\n");
-                    PersonDetails employeeDetails = employees[i].getPersonDetails();
-                    System.out.println("Employee ID: " + employees[i].getEmployeeID() + "\nEmployee Name: " + employeeDetails.getFirstName() + " " + employeeDetails.getLastName());
+    public boolean employeeLogin(Employee[] employeesArray) {
 
-                    back = menuOptions.employeeMenuOptions();
-                    break;
-                } else if (i == Employee.getEmployeeNo() - 1) {
-                    System.out.println("Wrong username or password.\n");
-                }
+        for (i = 0; i < Employee.getEmployeeNo(); i++) {
+            if (employeesArray[i].getEmployeeID().equals(username) && employeesArray[i].getPassword().equals(password)) {
+                System.out.println("Log in successful.\n");
+                PersonDetails employeeDetails = employeesArray[i].getPersonDetails();
+                System.out.println("Employee ID: " + employeesArray[i].getEmployeeID() + "\nEmployee Name: " + employeeDetails.getFirstName() + " " + employeeDetails.getLastName());
+
+                return true;
+            } else if (i == Employee.getEmployeeNo() - 1) {
+                System.out.println("Wrong username or password.\n");
             }
-        }while(!back);
+        }
+        return false;
     }
 
 
-    public Login(Manager[] managersArray){
-        Manager[] managers = new Manager[Manager.getManagerNo()];
-        System.arraycopy(managersArray, 0, managers, 0, Manager.getManagerNo());
+    public boolean managerLogin(Manager[] managersArray){
 
-        String username;
-        String password;
-        int i;
-        boolean back = false;
+        for (i = 0; i < Manager.getManagerNo(); i++) {
+            if (managersArray[i].getManagerID().equals(username) && managersArray[i].getPassword().equals(password)) {
+                System.out.println("Log in successful.\n");
+                PersonDetails managerDetails = managersArray[i].getPersonDetails();
+                System.out.println("Manager ID: " + managersArray[i].getManagerID() + "\nManager Name: " + managerDetails.getFirstName() + " " + managerDetails.getLastName());
 
-        System.out.println("Login Page");
-        System.out.println("----------");
-
-        do {
-            System.out.print("Username: ");
-            username = scanner.nextLine();
-
-            System.out.print("Password: ");
-            password = scanner.nextLine();
-
-            for (i = 0; i < Manager.getManagerNo(); i++) {
-                if (managers[i].getManagerID().equals(username) && managers[i].getPassword().equals(password)) {
-                    System.out.println("Log in successful.\n");
-                    PersonDetails managerDetails = managers[i].getPersonDetails();
-                    System.out.println("Manager ID: " + managers[i].getManagerID() + "\nManager Name: " + managerDetails.getFirstName() + " " + managerDetails.getLastName());
-
-                    back = menuOptions.managerMenuOptions();
-                    break;
-                } else if (i == Manager.getManagerNo() - 1) {
-                    System.out.println("Wrong username or password.\n");
-                }
+                return true;
+            } else if (i == Manager.getManagerNo() - 1) {
+                System.out.println("Wrong username or password.\n");
             }
-        }while(!back);
+        }
+        return false;
     }
 }

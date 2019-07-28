@@ -8,7 +8,6 @@ class Employee extends Job {
     private Branch branch;
 
     //Constructor
-
     public Employee(String jobTitle, PersonDetails personDetails, String password, Branch branch) {
         super(jobTitle);
         employeeNo++;
