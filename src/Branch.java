@@ -1,15 +1,18 @@
-public class Branches {
+class Branch {
     //Variables
     private static int nextBranchId = 1;
     private String branchId;
     private String branchName;
-    private String managerId;
+    private Manager manager;
 
     //Constructor
-    public Branches(String branchName, String managerId) {
+    public Branch() {
+    }
+
+    public Branch(String branchName, Manager manager) {
         this.branchId = String.format("B%02d",nextBranchId++);
         this.branchName = branchName;
-        this.managerId = managerId;
+        this.manager = manager;
     }
 
     //Getter
@@ -21,8 +24,8 @@ public class Branches {
         return branchName;
     }
 
-    public String getManagerId() {
-        return managerId;
+    public Manager getManager() {
+        return manager;
     }
 
     //Setter
@@ -30,14 +33,17 @@ public class Branches {
         this.branchName = branchName;
     }
 
-    public void setManagerId(String managerId) {
-        this.managerId = managerId;
+    public void setManager(Manager manager) {
+        this.manager = manager;
     }
 
     //Methods
+    @Override
     public String toString() {
-        return  "\nBranch ID: " + branchId +
-                "\nBranch Name: " + branchName +
-                "\nManager ID: " + managerId;
+        return "Branch{" +
+                "branchId='" + branchId + '\'' +
+                ", branchName='" + branchName + '\'' +
+                ", manager=" + manager +
+                '}';
     }
 }
