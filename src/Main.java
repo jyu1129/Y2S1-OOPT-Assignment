@@ -33,41 +33,4 @@ public class Main {
 
         MenuOptions menu = new MenuOptions();
 
-        do {
-            System.out.println("Employee or Manager");
-            System.out.println("-------------------");
-            System.out.println("1. Employee");
-            System.out.println("2. Manager");
-            System.out.println("0. Exit");
-            System.out.print("> ");
-
-            empOrManager = scanner.nextInt();
-            Login login = new Login();
-
-            switch (empOrManager) {
-                case 1:
-                    loginSuccess = login.employeeLogin(employees);
-                    if(loginSuccess) {
-                        menu.employeeMenuOptions(products);
-                        break;
-                    }else{
-                        break;
-                    }
-                case 2:
-                    loginSuccess = login.managerLogin(managers);
-                    if(loginSuccess) {
-                        menu.managerMenuOptions();
-                        break;
-                    }else{
-                        break;
-                    }
-                case 0:
-                    System.exit(0);
-                default:
-                    System.out.println("No such option!");
-                    break;
-            }
-        }while(true);
-    }
-
 }
