@@ -8,7 +8,6 @@ class Login {
     private MenuOptions menuOptions = new MenuOptions();
     private String username;
     private String password;
-    private int i;
 
     public Login() {
         Scanner scanner = new Scanner(System.in);
@@ -23,16 +22,19 @@ class Login {
         password = scanner.nextLine();
     }
 
-    public boolean employeeLogin(Employee[] employeesArray) {
+    public boolean employeeLogin(Employee[][] employeesArray) {
 
-        for (i = 0; i < Employee.getEmployeeNo(); i++) {
-            if (employeesArray[i].getEmployeeID().equals(username) && employeesArray[i].getPassword().equals(password)) {
-                System.out.println("Log in successful.\n");
-                PersonDetails employeeDetails = employeesArray[i].getPersonDetails();
-                System.out.println("Employee ID: " + employeesArray[i].getEmployeeID() + "\nEmployee Name: " + employeeDetails.getFirstName() + " " + employeeDetails.getLastName());
+        for (int i = 0; i < Branch.getBranchNo(); i++) {
+            for(int j = 0; j < Employee.getEmployeeNo(); j++ ) {
+                if (employeesArray[i][j].getEmployeeID().equals(username) && employeesArray[i][j].getPassword().equals(password)) {
+                    System.out.println("Log in successful.\n");
+                    PersonDetails employeeDetails = employeesArray[i][j].getPersonDetails();
+                    System.out.println("Employee ID: " + employeesArray[i][j].getEmployeeID() + "\nEmployee Name: " + employeeDetails.getFirstName() + " " + employeeDetails.getLastName());
 
-                return true;
-            } else if (i == Employee.getEmployeeNo() - 1) {
+                    return true;
+                }
+            }
+            if (i == Branch.getBranchNo() - 1) {
                 System.out.println("Wrong username or password.\n");
             }
         }
@@ -42,7 +44,7 @@ class Login {
 
     public boolean managerLogin(Manager[] managersArray){
 
-        for (i = 0; i < Manager.getManagerNo(); i++) {
+        for (int i = 0; i < Manager.getManagerNo(); i++) {
             if (managersArray[i].getManagerID().equals(username) && managersArray[i].getPassword().equals(password)) {
                 System.out.println("Log in successful.\n");
                 PersonDetails managerDetails = managersArray[i].getPersonDetails();

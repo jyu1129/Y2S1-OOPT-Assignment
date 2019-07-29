@@ -1,5 +1,13 @@
 import java.util.Scanner;
 
+/*2. Implement the salesOrderProcess(), which represent the barcode scanner function that scan the barcode of the
+   product and automatically add the product list on the sales order screen and do the calculation of the products
+   ordered. The function prompts the user for barcode and compare the barcode with the system's product ID code. Then,
+    If the quantity of the product is empty, continue to display the item has no quantity left. Else, if the quantity
+    ordered of the specific product is 0, that element of the array will be shift to most left element which is 0 by now.
+    Then the most left element will be added by 1 to get ready to be occupied by the other non-repeating product. After
+    that, the product quantity will be deducted by 1 and the quantity ordered will be increase by 1. The function will
+    display the products ordered details. Finally, the quantity Ordered will be reset for repeating usage.*/
 class SalesOrder {
 
     public SalesOrder(Product[] products){

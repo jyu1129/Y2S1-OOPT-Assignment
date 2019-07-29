@@ -5,16 +5,14 @@ class Employee extends Job {
     private String employeeID;
     private PersonDetails personDetails;
     private String password;
-    private Branch branch;
 
     //Constructor
-    public Employee(String jobTitle, PersonDetails personDetails, String password, Branch branch) {
+    public Employee(String jobTitle, PersonDetails personDetails, String password) {
         super(jobTitle);
         employeeNo++;
         this.employeeID = String.format("S%04d", nextEmployeeID++);
         this.personDetails = personDetails;
         this.password = password;
-        this.branch = branch;
     }
 
     //Getter
@@ -34,9 +32,6 @@ class Employee extends Job {
         return password;
     }
 
-    public Branch getBranches() {
-        return branch;
-    }
 
     //Setter
     public void setPersonDetails(PersonDetails personDetails){
@@ -47,9 +42,6 @@ class Employee extends Job {
         this.password = password;
     }
 
-    public void setBranch(Branch branch) {
-        this.branch = branch;
-    }
 
     @Override
     public String toString() {
@@ -57,7 +49,6 @@ class Employee extends Job {
                 "employeeID='" + employeeID + '\'' +
                 ", personDetails=" + personDetails +
                 ", password='" + password + '\'' +
-                ", branch=" + branch +
                 ", jobTitle='" + jobTitle + '\'' +
                 "} ";
     }
