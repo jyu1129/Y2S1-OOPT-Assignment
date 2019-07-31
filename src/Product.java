@@ -7,21 +7,16 @@ class Product {
     private String productType;
     private int productWeight;
     private double price;
-    private int stockQuantity;
-    private int quantityOrdered;
-    private int nextQuantityOrdered = 1;
 
     //Constructors
 
-    public Product(String productName, String productType, int productWeight, double price, int quantity) {
+    public Product(String productName, String productType, int productWeight, double price) {
         productNo++;
         this.productId = String.format("P%04d",nextProductId++);
         this.productName = productName;
         this.productType = productType;
         this.productWeight = productWeight;
         this.price = price;
-        this.stockQuantity = quantity;
-        this.quantityOrdered = 0;
     }
 
     //Getter
@@ -49,18 +44,6 @@ class Product {
         return productWeight;
     }
 
-    public int getQuantity() {
-        return stockQuantity;
-    }
-
-    public int getQuantityOrdered() {
-        return quantityOrdered;
-    }
-
-    public int getNextQuantityOrdered() {
-        return nextQuantityOrdered++;
-    }
-
     //Setter
     public void setProductName(String productName) {
         this.productName = productName;
@@ -78,26 +61,15 @@ class Product {
         this.productWeight = productWeight;
     }
 
-    public void setQuantity(int quantity) {
-        this.stockQuantity = quantity;
-    }
 
-    public void setQuantityOrdered(int quantityOrdered) {
-        this.quantityOrdered = quantityOrdered;
-    }
-
-    public void setNextQuantityOrdered(int nextQuantityOrdered) {
-        this.nextQuantityOrdered = nextQuantityOrdered;
-    }
-
-    //Methods
+    @Override
     public String toString() {
-        return  "\nProduct ID: " + productId +
-                "\nProduct Name: " + productName +
-                "\nProduct Type: " + productType +
-                "\nProduct Weight: " + productWeight + "kg" +
-                "\nPrice: RM" + price +
-                "\nQuantity: " + stockQuantity +
-                "\nQuantity Ordered: " + quantityOrdered;
+        return "Product{" +
+                "productId='" + productId + '\'' +
+                ", productName='" + productName + '\'' +
+                ", productType='" + productType + '\'' +
+                ", productWeight=" + productWeight +
+                ", price=" + price +
+                '}';
     }
 }

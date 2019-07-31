@@ -14,23 +14,28 @@ public class Main {
 
         PersonDetails[] person = new PersonDetails[max_number];
         Manager[] managers = new Manager[max_number];
-        Branch[] branches = new Branch[max_number];
-        Employee[][] employees = new Employee[max_number][max_number];
+        Branch branch = new Branch();
+        Employee[] employees = new Employee[max_number];
         Product[] products = new Product[max_number];
+        ProductItem[] productItem = new ProductItem[max_number];
 
         person[0] = new PersonDetails("Martin","Gary",'M',"0123456789","mtg@email.com","001230127890");
         managers[0] = new Manager("Manager", person[0], "abc123");
-        branches[0] = new Branch("Petaling Jaya", managers[0], employees[0]);
+        branch = new Branch("Petaling Jaya", managers[0], employees);
 
         person[1] = new PersonDetails("Gregor","Clegane",'M',"0123226545","gc1@email.com","000123141331");
-        employees[0][0]= new Employee("Cashier", person[1], "cba321");
+        employees[0]= new Employee("Cashier", person[1], "cba321");
 
         person[2] = new PersonDetails("Jon", "Snow", 'M',"01112806671","js1@gmal.com","901011141221");
-        employees[0][1] = new Employee("Cashier", person[2], "qwe123");
+        employees[1] = new Employee("Cashier", person[2], "qwe123");
 
-        products[0] = new Product ("Alpo Dog Food","Dog Food", 10,60.00, 10);
-        products[1] = new Product ("Pedigree Dog Food","Dog Food", 10,50.00, 10);
-        products[2] = new Product ("Merrick Dog Food","Dog Food", 10,90.00, 10);
+        products[0] = new Product ("Alpo Dog Food","Dog Food", 10,60.00);
+        products[1] = new Product ("Pedigree Dog Food","Dog Food", 10,50.00);
+        products[2] = new Product ("Merrick Dog Food","Dog Food", 10,90.00);
+
+        productItem[0] = new ProductItem(products[0], 10);
+        productItem[1] = new ProductItem(products[1], 20);
+        productItem[2] = new ProductItem(products[2], 30);
 
         MenuOptions menu = new MenuOptions();
 
@@ -49,7 +54,7 @@ public class Main {
                     Login empLogin = new Login();
                     loginSuccess = empLogin.employeeLogin(employees);
                     if(loginSuccess) {
-                        menu.employeeMenuOptions(products);
+                        menu.employeeMenuOptions(productItem);
                         break;
                     }else{
                         break;

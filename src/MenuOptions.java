@@ -6,7 +6,7 @@ class MenuOptions {
     public MenuOptions() {
     }
 
-    public void employeeMenuOptions(Product[] products){
+    public void employeeMenuOptions(ProductItem[] productItems){
 
         int menuOption;
 
@@ -21,7 +21,7 @@ class MenuOptions {
             menuOption = scanner.nextInt();
             switch (menuOption) {
                 case 1:
-                    SalesOrder salesOrder = new SalesOrder(products);
+                    SalesOrder salesOrder = new SalesOrder(productItems);
                     break;
                 case 2:
                     break;

@@ -1,3 +1,4 @@
+import java.util.Objects;
 import java.util.Scanner;
 
 /*2. Implement the salesOrderProcess(), which represent the barcode scanner function that scan the barcode of the
@@ -10,27 +11,47 @@ import java.util.Scanner;
     display the products ordered details. Finally, the quantity Ordered will be reset for repeating usage.*/
 class SalesOrder {
 
-    public SalesOrder(Product[] products){
+    private ProductItem[] salesOrderDetails;
+    private int counter = 0;
+
+    public SalesOrder(ProductItem[] productItems){
+        salesOrderDetails = new ProductItem[999];
+        for(int i = 0; i < productItems.length; i++){
+            if(productItems[i] != null) {
+                salesOrderDetails[i] = new ProductItem(productItems[i].getProduct(), productItems[i].getStockQuantity());
+            }
+        }
+
         Scanner scanner = new Scanner(System.in);
         int mostLeftElement = 0;
-        int counter = 0;
         String barcode;
         do {
-            System.out.print("Enter Barcode(1 to continue)> ");
+            System.out.print("\nEnter Barcode(1 to continue)> ");
             barcode = scanner.nextLine();
 
             for (int i = 0; i < Product.getProductNo(); i++) {
-                if (products[i].getProductId().equals(barcode)) {
-                    if (products[i].getQuantity() > 0) {
-                        if(products[i].getQuantityOrdered() == 0){
-                            Product temp = products[i];
-                            products[i] = products[mostLeftElement];
-                            products[mostLeftElement] = temp;
-                            i = mostLeftElement++;
+                if (salesOrderDetails[i].getProduct().getProductId().equals(barcode)) {
+                    if (salesOrderDetails[i].getStockQuantity() > 0) {
+                        if(salesOrderDetails[i].getQuantityOrdered() == 0){
+
+                            ProductItem temp = salesOrderDetails[i];
+                            salesOrderDetails[i] = salesOrderDetails[mostLeftElement];
+                            salesOrderDetails[mostLeftElement] = temp;
+
+                            productItems[i].setStockQuantity(productItems[i].getStockQuantity() - 1);
+                            salesOrderDetails[mostLeftElement].setStockQuantity(salesOrderDetails[mostLeftElement].getStockQuantity() - 1);
+                            salesOrderDetails[mostLeftElement].setQuantityOrdered(salesOrderDetails[mostLeftElement].getNextQuantityOrdered());
+
+                            mostLeftElement++;
                             counter++;
+                        }else {
+                            productItems[i].setStockQuantity(productItems[i].getStockQuantity() - 1);
+                            salesOrderDetails[i].setStockQuantity(salesOrderDetails[i].getStockQuantity() - 1);
+                            salesOrderDetails[i].setQuantityOrdered(salesOrderDetails[i].getNextQuantityOrdered());
                         }
-                        products[i].setQuantity(products[i].getQuantity() - 1);
-                        products[i].setQuantityOrdered(products[i].getNextQuantityOrdered());
+
+                        receipt();
+
                         break;
                     }else{
                         System.out.println("No quantity left!");
@@ -42,11 +63,22 @@ class SalesOrder {
             }
         } while (!"1".equals(barcode));
 
+        receipt();
+    }
+
+    public void receipt(){
         System.out.printf("%-30s%-9s%-7s%-7s\n\n","Product Name","Quantity","Price","Total");
         for(int i = 0; i < counter; i++) {
-            System.out.printf("%-30s%-9d%-7.2f%-7.2f\n", products[i].getProductName(), products[i].getQuantityOrdered(), products[i].getPrice(), products[i].getPrice() * products[i].getQuantityOrdered());
-            products[i].setQuantityOrdered(0);
-            products[i].setNextQuantityOrdered(1);
+            System.out.printf("%-30s%-9d%-7.2f%-7.2f\n", salesOrderDetails[i].getProduct().getProductName(), salesOrderDetails[i].getQuantityOrdered(), salesOrderDetails[i].getProduct().getPrice(),
+                    salesOrderDetails[i].getProduct().getPrice() * salesOrderDetails[i].getQuantityOrdered());
         }
+    }
+
+    public ProductItem[] getSalesOrderDetails() {
+        return salesOrderDetails;
+    }
+
+    public int getCounter() {
+        return counter;
     }
 }
