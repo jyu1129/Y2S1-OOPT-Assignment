@@ -1,4 +1,3 @@
-import java.util.Objects;
 import java.util.Scanner;
 
 /*2. Implement the salesOrderProcess(), which represent the barcode scanner function that scan the barcode of the
@@ -13,23 +12,30 @@ class SalesOrder {
 
     private ProductItem[] salesOrderDetails;
     private int counter = 0;
+    private double total = 0;
+    private Scanner scanner = new Scanner(System.in);
+    private int mostLeftElement;
 
     public SalesOrder(ProductItem[] productItems){
-        salesOrderDetails = new ProductItem[999];
-        for(int i = 0; i < productItems.length; i++){
-            if(productItems[i] != null) {
-                salesOrderDetails[i] = new ProductItem(productItems[i].getProduct(), productItems[i].getStockQuantity());
+        int notNullCounter = 0;
+
+        for(ProductItem prod : productItems){
+            if(prod != null){
+                notNullCounter++;
             }
         }
+        salesOrderDetails = new ProductItem[notNullCounter];
 
-        Scanner scanner = new Scanner(System.in);
-        int mostLeftElement = 0;
+        for(int i = 0; i < salesOrderDetails.length; i++) {
+            salesOrderDetails[i] = new ProductItem(productItems[i].getProduct(), productItems[i].getStockQuantity());
+        }
+
         String barcode;
         do {
-            System.out.print("\nEnter Barcode(1 to continue)> ");
+            System.out.print("\nEnter Barcode(1 to checkout, 2 to edit order list)> ");
             barcode = scanner.nextLine();
 
-            for (int i = 0; i < Product.getProductNo(); i++) {
+            for (int i = 0; i < salesOrderDetails.length; i++) {
                 if (salesOrderDetails[i].getProduct().getProductId().equals(barcode)) {
                     if (salesOrderDetails[i].getStockQuantity() > 0) {
                         if(salesOrderDetails[i].getQuantityOrdered() == 0){
@@ -57,8 +63,12 @@ class SalesOrder {
                         System.out.println("No quantity left!");
                         break;
                     }
-                } else if (i == Product.getProductNo() - 1 && !"1".equals(barcode)) {
+                } else if (i == salesOrderDetails.length - 1 && !"1".equals(barcode)) {
                     System.out.println("No such barcode.");
+                } else if ("2".equals(barcode)){
+                    editQuantity();
+                    receipt();
+                    break;
                 }
             }
         } while (!"1".equals(barcode));
@@ -67,10 +77,42 @@ class SalesOrder {
     }
 
     public void receipt(){
-        System.out.printf("%-30s%-9s%-7s%-7s\n\n","Product Name","Quantity","Price","Total");
+        double[] subtotal = new double[256];
+        System.out.printf("%-4s%-30s%-9s%-7s%-8s\n\n","No.","Product Name","Quantity","Price","SubTotal");
         for(int i = 0; i < counter; i++) {
-            System.out.printf("%-30s%-9d%-7.2f%-7.2f\n", salesOrderDetails[i].getProduct().getProductName(), salesOrderDetails[i].getQuantityOrdered(), salesOrderDetails[i].getProduct().getPrice(),
-                    salesOrderDetails[i].getProduct().getPrice() * salesOrderDetails[i].getQuantityOrdered());
+            subtotal[i] = salesOrderDetails[i].getProduct().getPrice() * salesOrderDetails[i].getQuantityOrdered();
+            System.out.printf("%-4d%-30s%-9d%-7.2f%-8.2f\n", i+1, salesOrderDetails[i].getProduct().getProductName(), salesOrderDetails[i].getQuantityOrdered(), salesOrderDetails[i].getProduct().getPrice(),
+                                                             subtotal[i]);
+            total += subtotal[i];
+        }
+        System.out.printf("%-50s%-8.2f\n","Total", total);
+        total = 0;
+    }
+
+    public void editQuantity(){
+        receipt();
+        System.out.print("Please select order list number > ");
+        int list = scanner.nextInt();
+        list--;
+        System.out.print("Please enter quantity > ");
+        int editedQuantity = scanner.nextInt();
+        scanner.nextLine();
+
+        if(editedQuantity != 0) {
+            salesOrderDetails[list].setStockQuantity(salesOrderDetails[list].getStockQuantity()-(editedQuantity-salesOrderDetails[list].getQuantityOrdered()));
+            salesOrderDetails[list].setQuantityOrdered(editedQuantity);
+            salesOrderDetails[list].setNextQuantityOrdered(editedQuantity + 1);
+        }else {
+            salesOrderDetails[list].setStockQuantity(salesOrderDetails[list].getStockQuantity() + salesOrderDetails[list].getQuantityOrdered());
+            salesOrderDetails[list].setQuantityOrdered(editedQuantity);
+            salesOrderDetails[list].setNextQuantityOrdered(editedQuantity + 1);
+            ProductItem temp = salesOrderDetails[list];
+            for(int i = 0; i < salesOrderDetails.length - list - 1; i++) {
+                salesOrderDetails[list + i] = salesOrderDetails[list + i + 1];
+            }
+            salesOrderDetails[salesOrderDetails.length - 1] = temp;
+            counter--;
+            mostLeftElement--;
         }
     }
 
@@ -80,5 +122,9 @@ class SalesOrder {
 
     public int getCounter() {
         return counter;
+    }
+
+    public double getTotal(){
+        return total;
     }
 }
