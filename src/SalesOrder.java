@@ -32,7 +32,7 @@ class SalesOrder {
 
         String barcode;
         do {
-            System.out.print("\nEnter Barcode(1 to checkout, 2 to edit order list)> ");
+            System.out.print("\nEnter Item ID(1 to checkout, 2 to edit order list)> ");
             barcode = scanner.nextLine();
 
             for (int i = 0; i < salesOrderDetails.length; i++) {
