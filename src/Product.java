@@ -1,6 +1,5 @@
 class Product {
     //Variables
-    private static int productNo = 0;
     private static int nextProductId = 1;
     private String productId;
     private String productName;
@@ -10,7 +9,6 @@ class Product {
     //Constructors
 
     public Product(String productName, String productType, double price) {
-        productNo++;
         this.productId = String.format("P%04d",nextProductId++);
         this.productName = productName;
         this.productType = productType;
@@ -18,10 +16,6 @@ class Product {
     }
 
     //Getter
-    public static int getProductNo() {
-        return productNo;
-    }
-
     public String getProductId() {
         return productId;
     }

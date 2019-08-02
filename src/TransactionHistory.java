@@ -7,7 +7,7 @@ class TransactionHistory {
         this.counter = counter;
 
         for(int i = 0; i < counter; i++){
-            System.out.println(i + ". RM" + salesOrders[i].getTotal());
+            System.out.println(i + 1 + ". RM" + salesOrders[i].getTotal());
         }
     }
 }
