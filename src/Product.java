@@ -5,17 +5,15 @@ class Product {
     private String productId;
     private String productName;
     private String productType;
-    private int productWeight;
     private double price;
 
     //Constructors
 
-    public Product(String productName, String productType, int productWeight, double price) {
+    public Product(String productName, String productType, double price) {
         productNo++;
         this.productId = String.format("P%04d",nextProductId++);
         this.productName = productName;
         this.productType = productType;
-        this.productWeight = productWeight;
         this.price = price;
     }
 
@@ -40,10 +38,6 @@ class Product {
         return price;
     }
 
-    public int getProductWeight() {
-        return productWeight;
-    }
-
     //Setter
     public void setProductName(String productName) {
         this.productName = productName;
@@ -57,10 +51,6 @@ class Product {
         this.price = price;
     }
 
-    public void setProductWeight(int productWeight) {
-        this.productWeight = productWeight;
-    }
-
 
     @Override
     public String toString() {
@@ -68,7 +58,6 @@ class Product {
                 "productId='" + productId + '\'' +
                 ", productName='" + productName + '\'' +
                 ", productType='" + productType + '\'' +
-                ", productWeight=" + productWeight +
                 ", price=" + price +
                 '}';
     }

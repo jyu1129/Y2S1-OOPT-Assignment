@@ -29,15 +29,13 @@ public class Main {
         person[2] = new PersonDetails("Jon", "Snow", 'M',"01112806671","js1@gmal.com","901011141221");
         employees[1] = new Employee("Cashier", person[2], "qwe123");
 
-        products[0] = new Product ("Alpo Dog Food","Dog Food", 10,60.00);
-        products[1] = new Product ("Pedigree Dog Food","Dog Food", 10,50.00);
-        products[2] = new Product ("Merrick Dog Food","Dog Food", 10,90.00);
+        products[0] = new Product ("Alpo Dog Food","Dog Food", 60.00);
+        products[1] = new Product ("Pedigree Dog Food","Dog Food", 50.00);
+        products[2] = new Product ("Merrick Dog Food","Dog Food", 90.00);
 
         productItem[0] = new ProductItem(products[0], 10);
         productItem[1] = new ProductItem(products[1], 20);
         productItem[2] = new ProductItem(products[2], 30);
-
-        MenuOptions menu = new MenuOptions();
 
         do {
             System.out.println("Employee or Manager");
@@ -54,7 +52,7 @@ public class Main {
                     Login empLogin = new Login();
                     loginSuccess = empLogin.employeeLogin(employees);
                     if(loginSuccess) {
-                        menu.employeeMenuOptions(productItem);
+                        employeeMenuOptions(productItem);
                         break;
                     }else{
                         break;
@@ -63,7 +61,7 @@ public class Main {
                     Login mgrLogin = new Login();
                     loginSuccess = mgrLogin.managerLogin(managers);
                     if(loginSuccess) {
-                        menu.managerMenuOptions();
+                        managerMenuOptions();
                         break;
                     }else{
                         break;
@@ -75,6 +73,76 @@ public class Main {
                     break;
             }
         }while(true);
+    }
+
+    public static void employeeMenuOptions(ProductItem[] productItems){
+        Scanner scanner = new Scanner(System.in);
+        SalesOrder[] salesOrders = new SalesOrder[max_number];
+        int counter = 0;
+
+        int menuOption;
+
+        do {
+            System.out.println("Menu Options");
+            System.out.println("------------");
+            System.out.println("1. Sales Order");
+            System.out.println("2. Transaction History");
+            System.out.println("3. Logout");
+            System.out.println("0. Exit");
+            System.out.print("> ");
+
+            menuOption = scanner.nextInt();
+            switch (menuOption) {
+                case 1:
+                    salesOrders[counter++] = new SalesOrder(productItems);
+                    break;
+                case 2:
+                    TransactionHistory transactionHistory = new TransactionHistory(salesOrders, counter);
+                    break;
+                case 3:
+                    break;
+                case 0:
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("No such option!");
+                    break;
+            }
+        } while (menuOption != 2);
+    }
+
+    public static void managerMenuOptions(){
+        Scanner scanner = new Scanner(System.in);
+
+        int menuOption;
+
+        do {
+            System.out.println("Menu Options");
+            System.out.println("------------");
+            System.out.println("1. Special manager option");
+            System.out.println("2. Special manager option");
+            System.out.println("3. Logout");
+            System.out.println("0. Exit");
+            System.out.print("> ");
+
+            menuOption = scanner.nextInt();
+            switch (menuOption) {
+                case 1:
+                    System.out.println("special~");
+                    break;
+                case 2:
+                    System.out.println("special~~~~");
+                    break;
+                case 3:
+                    break;
+                case 0:
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("No such option!");
+                    break;
+            }
+        } while (menuOption != 3);
     }
 
 }

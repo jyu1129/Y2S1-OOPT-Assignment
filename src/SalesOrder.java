@@ -12,9 +12,11 @@ class SalesOrder {
 
     private ProductItem[] salesOrderDetails;
     private int counter = 0;
+    private double tempTotal = 0;
     private double total = 0;
     private Scanner scanner = new Scanner(System.in);
     private int mostLeftElement;
+    private double amount;
 
     public SalesOrder(ProductItem[] productItems){
         int notNullCounter = 0;
@@ -56,7 +58,7 @@ class SalesOrder {
                             salesOrderDetails[i].setQuantityOrdered(salesOrderDetails[i].getNextQuantityOrdered());
                         }
 
-                        receipt();
+                        receipt(false);
 
                         break;
                     }else{
@@ -67,30 +69,21 @@ class SalesOrder {
                     System.out.println("No such barcode.");
                 } else if ("2".equals(barcode)){
                     editQuantity();
-                    receipt();
+                    receipt(false);
                     break;
                 }
             }
         } while (!"1".equals(barcode));
 
-        receipt();
-    }
-
-    public void receipt(){
-        double[] subtotal = new double[256];
-        System.out.printf("%-4s%-30s%-9s%-7s%-8s\n\n","No.","Product Name","Quantity","Price","SubTotal");
+        receipt(false);
         for(int i = 0; i < counter; i++) {
-            subtotal[i] = salesOrderDetails[i].getProduct().getPrice() * salesOrderDetails[i].getQuantityOrdered();
-            System.out.printf("%-4d%-30s%-9d%-7.2f%-8.2f\n", i+1, salesOrderDetails[i].getProduct().getProductName(), salesOrderDetails[i].getQuantityOrdered(), salesOrderDetails[i].getProduct().getPrice(),
-                                                             subtotal[i]);
-            total += subtotal[i];
+            total += salesOrderDetails[i].getProduct().getPrice() * salesOrderDetails[i].getQuantityOrdered();
         }
-        System.out.printf("%-50s%-8.2f\n","Total", total);
-        total = 0;
+        payment();
     }
 
     public void editQuantity(){
-        receipt();
+        receipt(false);
         System.out.print("Please select order list number > ");
         int list = scanner.nextInt();
         list--;
@@ -115,6 +108,38 @@ class SalesOrder {
             mostLeftElement--;
         }
     }
+
+    public void payment(){
+        do {
+            System.out.print("Please enter the amount of RM you want to pay > ");
+            amount = scanner.nextDouble();
+            if(amount < total){
+                System.out.println("The amount of RM you want to pay cannot be lower than the total price.");
+            }
+        } while (amount < total);
+        System.out.printf("RM%.2f entered.\n", amount);
+        receipt(true);
+    }
+
+    public void receipt(boolean paid){
+        double[] subtotal = new double[256];
+        System.out.printf("%-4s%-30s%-9s%-7s%-8s\n\n","No.","Product Name","Quantity","Price","SubTotal");
+        for(int i = 0; i < counter; i++) {
+            subtotal[i] = salesOrderDetails[i].getProduct().getPrice() * salesOrderDetails[i].getQuantityOrdered();
+            System.out.printf("%-4d%-30s%-9d%-7.2f%-8.2f\n", i+1, salesOrderDetails[i].getProduct().getProductName(), salesOrderDetails[i].getQuantityOrdered(), salesOrderDetails[i].getProduct().getPrice(),
+                                                             subtotal[i]);
+            tempTotal += subtotal[i];
+        }
+        System.out.printf("%-50s%-8.2f\n","Total", tempTotal);
+        if(paid){
+            System.out.printf("%-50s%-8.2f\n","Ringgit Malaysia", amount);
+            System.out.printf("%-50s%-8.2f\n\n","Change", amount - total);
+        }
+
+        tempTotal = 0;
+    }
+
+
 
     public ProductItem[] getSalesOrderDetails() {
         return salesOrderDetails;

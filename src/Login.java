@@ -5,7 +5,6 @@ import java.util.Scanner;
  obtain the employees array element by using for loop. If an invalid username or password is entered, continue to prompt
  for valid login details.*/
 class Login {
-    private MenuOptions menuOptions = new MenuOptions();
     private String username;
     private String password;
 
