@@ -1,64 +1,88 @@
-class Product {
-    //Variables
-    private static int productNo = 0;
-    private static int nextProductId = 1;
-    private String productId;
-    private String productName;
-    private String productType;
+public class Product {
+    private String prodId;
+    private String prodName;
+    private String prodType;
+    private int stockQuantity;
     private double price;
+    private static int nextProdId = 1;
 
-    //Constructors
+    // Constructors (Must have prodName and price)
 
-    public Product(String productName, String productType, double price) {
-        productNo++;
-        this.productId = String.format("P%04d",nextProductId++);
-        this.productName = productName;
-        this.productType = productType;
+    // Constructor with all data available
+    public Product(String prodName, String prodType, double price, int stockQuantity) {
+        this.prodId = String.format("P%04d", nextProdId++);
+        this.prodName = prodName;
+        this.prodType = prodType;
+        this.stockQuantity = stockQuantity;
         this.price = price;
     }
 
-    //Getter
-    public static int getProductNo() {
-        return productNo;
+    // Constructor without stockQuantity only
+    public Product(String prodName, String prodType, double price) {
+        this(prodName, prodType, price, 0);
     }
 
-    public String getProductId() {
-        return productId;
+    // Constructor without prodType only
+    public Product(String prodName, double price, int stockQuantity) {
+        this(prodName, "n/a", price, stockQuantity);
+
     }
 
-    public String getProductName() {
-        return productName;
+    // Constructor without prodType and stockQuantity
+    public Product(String prodName, double price) {
+        this(prodName, "n/a", price, 0);
     }
 
-    public String getProductType() {
-        return productType;
+    // Setter
+
+    // Note: Necessary when the database already have some product.
+    public static void setNextProdId(int nextProdId) {
+        Product.nextProdId = nextProdId;
     }
 
-    public double getPrice() {
-        return price;
+    public void setProdName(String prodName) {
+        this.prodName = prodName;
     }
 
-    //Setter
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setProdType(String prodType) {
+        this.prodType = prodType;
     }
 
-    public void setProductType(String productType) {
-        this.productType = productType;
+    public void setStockQuantity(int stockQuantity) {
+        this.stockQuantity = stockQuantity;
     }
 
     public void setPrice(double price) {
         this.price = price;
     }
 
+    // Getter
+    public String getProdId() {
+        return prodId;
+    }
 
+    public String getProdName() {
+        return prodName;
+    }
+
+    public String getProdType() {
+        return prodType;
+    }
+
+    public int getStockQuantity() {
+        return stockQuantity;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    // Methods
     @Override
     public String toString() {
-        return "Product{" +
-                "productId='" + productId + '\'' +
-                ", productName='" + productName + '\'' +
-                ", productType='" + productType + '\'' +
-                ", price=" + price +
-                '}';
+        return String.format(
+                "Product: {Product ID: %s\nProduct Name: %s\nProduct Type: %s\nStock Quantity: %d\nPrice: RM %,.2fea\n}", prodId,
+                prodName, prodType, stockQuantity, price);
     }
+
 }

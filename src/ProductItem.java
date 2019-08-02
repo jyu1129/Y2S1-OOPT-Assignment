@@ -1,6 +1,5 @@
 class ProductItem {
     private Product product;
-    private int stockQuantity;
     private int quantityOrdered = 0;
     private int nextQuantityOrdered = 1;
 
@@ -9,7 +8,6 @@ class ProductItem {
 
     public ProductItem(Product product, int stockQuantity) {
         this.product = product;
-        this.stockQuantity = stockQuantity;
     }
 
     //Getter
@@ -17,9 +15,6 @@ class ProductItem {
         return product;
     }
 
-    public int getStockQuantity() {
-        return stockQuantity;
-    }
 
     public int getQuantityOrdered() {
         return quantityOrdered;
@@ -34,9 +29,6 @@ class ProductItem {
         this.product = product;
     }
 
-    public void setStockQuantity(int stockQuantity) {
-        this.stockQuantity = stockQuantity;
-    }
 
     public void setQuantityOrdered(int quantityOrdered) {
         this.quantityOrdered = quantityOrdered;
@@ -46,13 +38,22 @@ class ProductItem {
         this.nextQuantityOrdered = nextQuantityOrdered;
     }
 
+
+    //Methods
     @Override
     public String toString() {
         return "ProductItem{" +
                 "product=" + product +
-                ", stockQuantity=" + stockQuantity +
                 ", quantityOrdered=" + quantityOrdered +
                 ", nextQuantityOrdered=" + nextQuantityOrdered +
                 '}';
+    }
+
+    public boolean stockOut(int quantity){
+        if(product.getStockQuantity()>quantityOrdered){
+            product.setStockQuantity(product.getStockQuantity()-quantity);
+            return true;
+        }
+        else return false;
     }
 }
