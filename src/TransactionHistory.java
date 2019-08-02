@@ -8,6 +8,7 @@ class TransactionHistory {
 
         for(int i = 0; i < counter; i++){
             System.out.println(i + 1 + ". RM" + salesOrders[i].getTotal());
+            salesOrders[i].getSalesOrderDetails(0).getProduct().
         }
     }
 }
