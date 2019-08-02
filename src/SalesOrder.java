@@ -23,6 +23,10 @@ class SalesOrder {
             salesOrderDetails[i] = new ProductItem(productItems[i].getProduct());
         }
 
+        order(salesOrderDetails, productItems);
+    }
+
+    private void order(ProductItem[] salesOrderDetails, ProductItem[] productItems){
         String barcode;
         do {
             System.out.print("\nEnter Item ID(1 to checkout, 2 to edit order list)> ");
@@ -44,7 +48,6 @@ class SalesOrder {
                         }else {
                             productItems[i].getProduct().setStockQuantity(productItems[i].getProduct().getStockQuantity() - 1);
                         }
-
                         receipt(false);
                         break;
                     }else{
