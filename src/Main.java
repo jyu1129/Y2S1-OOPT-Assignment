@@ -29,13 +29,13 @@ public class Main {
         person[2] = new PersonDetails("Jon", "Snow", 'M',"01112806671","js1@gmal.com","901011141221");
         employees[1] = new Employee("Cashier", person[2], "qwe123");
 
-        products[0] = new Product ("Alpo Dog Food","Dog Food", 60.00);
-        products[1] = new Product ("Pedigree Dog Food","Dog Food", 50.00);
-        products[2] = new Product ("Merrick Dog Food","Dog Food", 90.00);
+        products[0] = new Product ("Alpo Dog Food","Dog Food", 60.00, 30);
+        products[1] = new Product ("Pedigree Dog Food","Dog Food", 50.00, 20);
+        products[2] = new Product ("Merrick Dog Food","Dog Food", 90.00, 50);
 
-        productItem[0] = new ProductItem(products[0], 10);
-        productItem[1] = new ProductItem(products[1], 20);
-        productItem[2] = new ProductItem(products[2], 30);
+        productItem[0] = new ProductItem(products[0]);
+        productItem[1] = new ProductItem(products[1]);
+        productItem[2] = new ProductItem(products[2]);
 
         do {
             System.out.println("Employee or Manager");

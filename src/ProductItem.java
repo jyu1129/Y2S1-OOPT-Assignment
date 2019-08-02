@@ -6,7 +6,7 @@ class ProductItem {
     public ProductItem() {
     }
 
-    public ProductItem(Product product, int stockQuantity) {
+    public ProductItem(Product product) {
         this.product = product;
     }
 
@@ -52,6 +52,7 @@ class ProductItem {
     public boolean stockOut(int quantity){
         if(product.getStockQuantity()>quantityOrdered){
             product.setStockQuantity(product.getStockQuantity()-quantity);
+            quantityOrdered = nextQuantityOrdered++;
             return true;
         }
         else return false;

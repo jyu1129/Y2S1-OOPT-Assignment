@@ -20,7 +20,7 @@ class SalesOrder {
         salesOrderDetails = new ProductItem[notNullCounter];
 
         for(int i = 0; i < salesOrderDetails.length; i++) {
-            salesOrderDetails[i] = new ProductItem(productItems[i].getProduct(), productItems[i].getStockQuantity());
+            salesOrderDetails[i] = new ProductItem(productItems[i].getProduct());
         }
 
         String barcode;
@@ -29,28 +29,23 @@ class SalesOrder {
             barcode = scanner.nextLine();
 
             for (int i = 0; i < salesOrderDetails.length; i++) {
-                if (salesOrderDetails[i].getProduct().getProductId().equals(barcode)) {
-                    if (salesOrderDetails[i].getStockQuantity() > 0) {
-                        if(salesOrderDetails[i].getQuantityOrdered() == 0){
+                if (salesOrderDetails[i].getProduct().getProdId().equals(barcode)) {
+                    if (salesOrderDetails[i].stockOut(1)) {
+                        if(salesOrderDetails[i].getQuantityOrdered() == 1){
 
                             ProductItem temp = salesOrderDetails[i];
                             salesOrderDetails[i] = salesOrderDetails[mostLeftElement];
                             salesOrderDetails[mostLeftElement] = temp;
 
-                            productItems[i].setStockQuantity(productItems[i].getStockQuantity() - 1);
-                            salesOrderDetails[mostLeftElement].setStockQuantity(salesOrderDetails[mostLeftElement].getStockQuantity() - 1);
-                            salesOrderDetails[mostLeftElement].setQuantityOrdered(salesOrderDetails[mostLeftElement].getNextQuantityOrdered());
+                            productItems[i].getProduct().setStockQuantity(productItems[i].getProduct().getStockQuantity() - 1);
 
                             mostLeftElement++;
                             counter++;
                         }else {
-                            productItems[i].setStockQuantity(productItems[i].getStockQuantity() - 1);
-                            salesOrderDetails[i].setStockQuantity(salesOrderDetails[i].getStockQuantity() - 1);
-                            salesOrderDetails[i].setQuantityOrdered(salesOrderDetails[i].getNextQuantityOrdered());
+                            productItems[i].getProduct().setStockQuantity(productItems[i].getProduct().getStockQuantity() - 1);
                         }
 
                         receipt(false);
-
                         break;
                     }else{
                         System.out.println("No quantity left!");
@@ -83,11 +78,11 @@ class SalesOrder {
         scanner.nextLine();
 
         if(editedQuantity != 0) {
-            salesOrderDetails[list].setStockQuantity(salesOrderDetails[list].getStockQuantity() - editedQuantity - salesOrderDetails[list].getQuantityOrdered());
+            salesOrderDetails[list].getProduct().setStockQuantity(salesOrderDetails[list].getProduct().getStockQuantity() - editedQuantity - salesOrderDetails[list].getQuantityOrdered());
             salesOrderDetails[list].setQuantityOrdered(editedQuantity);
             salesOrderDetails[list].setNextQuantityOrdered(editedQuantity + 1);
         }else {
-            salesOrderDetails[list].setStockQuantity(salesOrderDetails[list].getStockQuantity() + salesOrderDetails[list].getQuantityOrdered());
+            salesOrderDetails[list].getProduct().setStockQuantity(salesOrderDetails[list].getProduct().getStockQuantity() + salesOrderDetails[list].getQuantityOrdered());
             salesOrderDetails[list].setQuantityOrdered(editedQuantity);
             salesOrderDetails[list].setNextQuantityOrdered(editedQuantity + 1);
             ProductItem temp = salesOrderDetails[list];
@@ -100,7 +95,7 @@ class SalesOrder {
         }
     }
 
-    public void payment(){
+    private void payment(){
         do {
             System.out.print("Please enter the amount of RM you want to pay > ");
             amount = scanner.nextDouble();
@@ -117,7 +112,7 @@ class SalesOrder {
         System.out.printf("%-4s%-30s%-9s%-7s%-8s\n\n","No.","Product Name","Quantity","Price","SubTotal");
         for(int i = 0; i < counter; i++) {
             subtotal[i] = salesOrderDetails[i].getProduct().getPrice() * salesOrderDetails[i].getQuantityOrdered();
-            System.out.printf("%-4d%-30s%-9d%-7.2f%-8.2f\n", i+1, salesOrderDetails[i].getProduct().getProductName(), salesOrderDetails[i].getQuantityOrdered(), salesOrderDetails[i].getProduct().getPrice(),
+            System.out.printf("%-4d%-30s%-9d%-7.2f%-8.2f\n", i+1, salesOrderDetails[i].getProduct().getProdName(), salesOrderDetails[i].getQuantityOrdered(), salesOrderDetails[i].getProduct().getPrice(),
                                                              subtotal[i]);
             tempTotal += subtotal[i];
         }
