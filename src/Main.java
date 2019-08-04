@@ -1,5 +1,5 @@
-import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Main {
     private static final int max_number = 999;
@@ -16,8 +16,9 @@ public class Main {
         Manager[] managers = new Manager[max_number];
         Branch branch = new Branch();
         Employee[] employees = new Employee[max_number];
-        Product[] products = new Product[max_number];
-        ProductItem[] productItem = new ProductItem[max_number];
+        ArrayList<Product> product = new ArrayList<Product>();
+        ArrayList<OrderItem> orderItem = new ArrayList<OrderItem>();
+        ArrayList<OrderList> orderLists = new ArrayList<OrderList>();
 
         person[0] = new PersonDetails("Martin","Gary",'M',"0123456789","mtg@email.com","001230127890");
         managers[0] = new Manager("Manager", person[0], "abc123");
@@ -29,13 +30,13 @@ public class Main {
         person[2] = new PersonDetails("Jon", "Snow", 'M',"01112806671","js1@gmal.com","901011141221");
         employees[1] = new Employee("Cashier", person[2], "qwe123");
 
-        products[0] = new Product ("Alpo Dog Food","Dog Food", 60.00, 30);
-        products[1] = new Product ("Pedigree Dog Food","Dog Food", 50.00, 20);
-        products[2] = new Product ("Merrick Dog Food","Dog Food", 90.00, 50);
+        product.add(new Product ("Alpo Dog Food","Dog Food", 60.00, 30));
+        product.add(new Product ("Pedigree Dog Food","Dog Food", 50.00, 20));
+        product.add(new Product ("Merrick Dog Food","Dog Food", 90.00, 50));
 
-        productItem[0] = new ProductItem(products[0]);
-        productItem[1] = new ProductItem(products[1]);
-        productItem[2] = new ProductItem(products[2]);
+        orderItem.add(new OrderItem(product.get(0)));
+        orderItem.add(new OrderItem(product.get(1)));
+        orderItem.add(new OrderItem(product.get(2)));
 
         do {
             System.out.println("Employee or Manager");
@@ -52,7 +53,7 @@ public class Main {
                     Login empLogin = new Login();
                     loginSuccess = empLogin.employeeLogin(employees);
                     if(loginSuccess) {
-                        employeeMenuOptions(productItem);
+                        employeeMenuOptions(orderItem, orderLists);
                         break;
                     }else{
                         break;
@@ -75,10 +76,9 @@ public class Main {
         }while(true);
     }
 
-    public static void employeeMenuOptions(ProductItem[] productItems){
+    public static void employeeMenuOptions(ArrayList<OrderItem> orderItem, ArrayList<OrderList> multipleOrderLists){
         Scanner scanner = new Scanner(System.in);
-        SalesOrder[] salesOrders = new SalesOrder[max_number];
-        int counter = 0;
+        String productCode;
 
         int menuOption;
 
@@ -92,12 +92,19 @@ public class Main {
             System.out.print("> ");
 
             menuOption = scanner.nextInt();
+            scanner.nextLine();
             switch (menuOption) {
                 case 1:
-                    salesOrders[counter++] = new SalesOrder(productItems);
+                    multipleOrderLists.add(new OrderList());
+                    do {
+                        System.out.print("\nEnter Item ID(1 to checkout, 2 to edit order list)> ");
+                        productCode = scanner.nextLine();
+                        multipleOrderLists.set(OrderList.getOrderListNo() - 1, modifyOrderList(productCode, orderItem, multipleOrderLists, OrderList.getOrderListNo()));
+                    }while (!"1".equals(productCode));
+                    payment(multipleOrderLists.get(OrderList.getOrderListNo() - 1));
                     break;
                 case 2:
-                    TransactionHistory transactionHistory = new TransactionHistory(salesOrders, counter);
+                    TransactionHistory transactionHistory = new TransactionHistory(multipleOrderLists, OrderList.getOrderListNo());
                     break;
                 case 3:
                     break;
@@ -109,6 +116,51 @@ public class Main {
                     break;
             }
         } while (menuOption != 2);
+    }
+
+    public static OrderList modifyOrderList(String productCode, ArrayList<OrderItem> orderItem, ArrayList<OrderList> orderLists, int listNo){
+        Scanner scanner = new Scanner(System.in);
+
+        for (int i = 0; i < OrderItem.getItemNo(); i++) {
+
+            if (orderItem.get(i).getProduct().getProdId().equals(productCode)) {
+                if (orderLists.get(listNo - 1).addOrderItem(orderItem.get(i))) {
+                    orderLists.get(listNo - 1).receipt(false, 0);
+                    break;
+                }
+            }
+            else if (i == OrderItem.getItemNo() - 1 && !"1".equals(productCode)) {
+                System.out.println("No such barcode.");
+                break;
+            }
+        }
+        if ("2".equals(productCode)) {
+            System.out.println("Please enter the order list number > ");
+            int list = scanner.nextInt();
+
+            System.out.println("Please enter the quantity > ");
+            int editedQuantity = scanner.nextInt();
+
+            orderLists.get(listNo - 1).editQuantity(list, editedQuantity);
+            orderLists.get(listNo - 1).receipt(false, 0);
+        }
+        return orderLists.get(listNo - 1);
+    }
+
+
+
+    public static void payment(OrderList orderList){
+        Scanner scanner = new Scanner(System.in);
+        double amount;
+            do {
+                System.out.print("Please enter the amount of RM you want to pay > ");
+                amount = scanner.nextDouble();
+                if(amount < orderList.getTotalAmount()){
+                    System.out.println("The amount of RM you want to pay cannot be lower than the totalAmount price.");
+                }
+            } while (amount < orderList.getTotalAmount());
+            System.out.printf("RM%.2f entered.\n", amount);
+            orderList.receipt(true, amount);
     }
 
     public static void managerMenuOptions(){
