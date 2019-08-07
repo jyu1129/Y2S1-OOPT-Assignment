@@ -1,16 +1,16 @@
-class Manager extends Job {
+class Manager extends PersonDetails {
     private static int managerNo = 0;
     private static int nextManagerID = 1;
     private String managerID;
-    private PersonDetails personDetails;
     private String password;
+    private String jobTitle;
 
-    public Manager(String jobTitle, PersonDetails personDetails, String password) {
-        super(jobTitle);
+    public Manager(PersonDetails personDetails, String password, String jobTitle) {
+        super(personDetails);
         managerNo++;
         this.managerID = String.format("M%04d", nextManagerID);
-        this.personDetails = personDetails;
         this.password = password;
+        this.jobTitle = jobTitle;
     }
 
     //Getter
@@ -22,12 +22,16 @@ class Manager extends Job {
         return managerID;
     }
 
-    public PersonDetails getPersonDetails() {
-        return personDetails;
-    }
-
     public String getPassword() {
         return password;
+    }
+
+    public String getJobTitle() {
+        return jobTitle;
+    }
+
+    public static int getNextManagerID() {
+        return nextManagerID;
     }
 
     //Setter
@@ -35,20 +39,26 @@ class Manager extends Job {
         this.managerID = managerID;
     }
 
-    public void setPersonDetails(PersonDetails personDetails) {
-        this.personDetails = personDetails;
-    }
-
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setJobTitle(String jobTitle) {
+        this.jobTitle = jobTitle;
     }
 
     @Override
     public String toString() {
         return "Manager{" +
                 "managerID='" + managerID + '\'' +
-                ", personDetails=" + personDetails +
                 ", password='" + password + '\'' +
-                "} " + super.toString();
+                ", jobTitle='" + jobTitle + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", gender=" + gender +
+                ", phoneNo='" + phoneNo + '\'' +
+                ", email='" + email + '\'' +
+                ", icNo='" + icNo + '\'' +
+                '}';
     }
 }

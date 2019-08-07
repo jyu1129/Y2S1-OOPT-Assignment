@@ -1,12 +1,21 @@
 class PersonDetails {
-    private String firstName;
-    private String lastName;
-    private char gender;
-    private String phoneNo;
-    private String email;
-    private String icNo;
+    protected String firstName;
+    protected String lastName;
+    protected char gender;
+    protected String phoneNo;
+    protected String email;
+    protected String icNo;
 
-    public PersonDetails() {
+    public PersonDetails(){
+    }
+
+    public PersonDetails(PersonDetails personDetails) {
+        firstName = personDetails.firstName;
+        lastName = personDetails.lastName;
+        gender = personDetails.gender;
+        phoneNo = personDetails.phoneNo;
+        email = personDetails.email;
+        icNo = personDetails.icNo;
     }
 
     public PersonDetails(String firstName, String lastName, char gender, String phoneNo, String email, String icNo) {

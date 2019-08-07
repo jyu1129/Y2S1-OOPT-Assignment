@@ -26,8 +26,7 @@ class Login {
         for(int i = 0; i < Employee.getEmployeeNo(); i++ ) {
             if (employeesArray[i].getEmployeeID().equals(username) && employeesArray[i].getPassword().equals(password)) {
                 System.out.println("Log in successful.\n");
-                PersonDetails employeeDetails = employeesArray[i].getPersonDetails();
-                System.out.println("Employee ID: " + employeesArray[i].getEmployeeID() + "\nEmployee Name: " + employeeDetails.getFirstName() + " " + employeeDetails.getLastName());
+                System.out.println("Employee ID: " + employeesArray[i].getEmployeeID() + "\nEmployee Name: " + employeesArray[i].getFirstName() + " " + employeesArray[i].getLastName());
 
                 return true;
             }else if (i == Employee.getEmployeeNo() - 1) {
@@ -43,8 +42,7 @@ class Login {
         for (int i = 0; i < Manager.getManagerNo(); i++) {
             if (managersArray[i].getManagerID().equals(username) && managersArray[i].getPassword().equals(password)) {
                 System.out.println("Log in successful.\n");
-                PersonDetails managerDetails = managersArray[i].getPersonDetails();
-                System.out.println("Manager ID: " + managersArray[i].getManagerID() + "\nManager Name: " + managerDetails.getFirstName() + " " + managerDetails.getLastName());
+                System.out.println("Manager ID: " + managersArray[i].getManagerID() + "\nManager Name: " + managersArray[i].getFirstName() + " " + managersArray[i].getLastName());
 
                 return true;
             } else if (i == Manager.getManagerNo() - 1) {

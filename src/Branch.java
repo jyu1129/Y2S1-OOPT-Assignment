@@ -8,18 +8,16 @@ class Branch {
     private String branchId;
     private String branchName;
     private Manager manager;
-    private Employee[] employees;
 
     //Constructor
     public Branch() {
     }
 
-    public Branch(String branchName, Manager manager, Employee[] employees) {
+    public Branch(String branchName, Manager manager) {
         branchNo++;
         this.branchId = String.format("B%02d",nextBranchId++);
         this.branchName = branchName;
         this.manager = manager;
-        this.employees = employees;
     }
 
     //Getter
@@ -39,10 +37,6 @@ class Branch {
         return manager;
     }
 
-    public Employee[] getEmployees() {
-        return employees;
-    }
-
     //Setter
     public void setBranchName(String branchName) {
         this.branchName = branchName;
@@ -52,17 +46,12 @@ class Branch {
         this.manager = manager;
     }
 
-    public void setEmployees(Employee[] employees) {
-        this.employees = employees;
-    }
-
     @Override
     public String toString() {
         return "Branch{" +
                 "branchId='" + branchId + '\'' +
                 ", branchName='" + branchName + '\'' +
                 ", manager=" + manager +
-                ", employees=" + Arrays.toString(employees) +
                 '}';
     }
 }

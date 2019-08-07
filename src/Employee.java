@@ -1,18 +1,18 @@
-class Employee extends Job {
+class Employee extends PersonDetails {
     //Variables
     private static int employeeNo = 0;
     private static int nextEmployeeID = 1;
     private String employeeID;
-    private PersonDetails personDetails;
     private String password;
+    private Branch branch;
 
     //Constructor
-    public Employee(String jobTitle, PersonDetails personDetails, String password) {
-        super(jobTitle);
+    public Employee(PersonDetails personDetails, String jobTitle, String password, Branch branch) {
+        super(personDetails);
         employeeNo++;
         this.employeeID = String.format("S%04d", nextEmployeeID++);
-        this.personDetails = personDetails;
         this.password = password;
+        this.branch = branch;
     }
 
     //Getter
@@ -24,32 +24,37 @@ class Employee extends Job {
         return employeeID;
     }
 
-    public PersonDetails getPersonDetails(){
-        return personDetails;
-    }
 
     public String getPassword() {
         return password;
     }
 
+    public Branch getBranch() {
+        return branch;
+    }
 
     //Setter
-    public void setPersonDetails(PersonDetails personDetails){
-        this.personDetails = personDetails;
-    }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
+    public void setBranch(Branch branch) {
+        this.branch = branch;
+    }
 
     @Override
     public String toString() {
         return "Employee{" +
                 "employeeID='" + employeeID + '\'' +
-                ", personDetails=" + personDetails +
                 ", password='" + password + '\'' +
-                ", jobTitle='" + jobTitle + '\'' +
-                "} ";
+                ", branch=" + branch +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", gender=" + gender +
+                ", phoneNo='" + phoneNo + '\'' +
+                ", email='" + email + '\'' +
+                ", icNo='" + icNo + '\'' +
+                '}';
     }
 }

@@ -6,7 +6,7 @@ class OrderList {
     private static int nextOrderNo = 1;
     private ArrayList<OrderItem> orderItem = new ArrayList<OrderItem>();
     private double totalAmount = 0;
-    private int itemCount = 0;
+    private static int itemCount = 0;
 
     public OrderList() {
         this.orderNo = String.format("I%06d", nextOrderNo++);
@@ -18,7 +18,6 @@ class OrderList {
             if (orderItem.get(i).getProduct() == item.getProduct() && orderItem.get(i).stockOut(1)) {
                 totalAmount += orderItem.get(i).getAmount();
 
-                OrderItem.setNextItemNo(itemCount + 1);
                 return true;
             }
         }
@@ -30,7 +29,7 @@ class OrderList {
 
             itemCount++;
         }catch(Exception e){
-            System.out.format("Failed to add item #%s to order #%s.\n", item.getItemNo(), orderNo);
+            System.out.format("Failed to add item #%s to order #%s.\n", itemCount + 1, orderNo);
             return false;
         }
         return true;
@@ -39,14 +38,19 @@ class OrderList {
     public void editQuantity(int list, int quantity){
         list--;
         if(quantity != 0) {
-            orderItem.get(list).getProduct().setStockQuantity(orderItem.get(list).getProduct().getStockQuantity() - quantity - orderItem.get(list).getQuantity());
-            orderItem.get(list).setQuantity(quantity);
-            orderItem.get(list).setNextQuantity(quantity + 1);
+            if(orderItem.get(list).stockOut(quantity - orderItem.get(list).getQuantity())) {
+                orderItem.get(list).setQuantity(quantity);
+                orderItem.get(list).setNextQuantity(quantity + 1);
+                totalAmount += orderItem.get(list).getAmount();
+            }
         }else {
-            orderItem.get(list).getProduct().setStockQuantity(orderItem.get(list).getProduct().getStockQuantity() + orderItem.get(list).getQuantity());
-            orderItem.get(list).setQuantity(quantity);
-            orderItem.get(list).setNextQuantity(quantity + 1);
-            orderItem.remove(list);
+            if(orderItem.get(list).stockOut(quantity - orderItem.get(list).getQuantity())) {
+                orderItem.get(list).setQuantity(quantity);
+                orderItem.get(list).setNextQuantity(quantity + 1);
+                totalAmount += orderItem.get(list).getAmount();
+                orderItem.remove(list);
+                itemCount--;
+            }
         }
     }
 
@@ -105,7 +109,7 @@ class OrderList {
         return totalAmount;
     }
 
-    public int getItemCount() {
+    public static int getItemCount() {
         return itemCount;
     }
 }

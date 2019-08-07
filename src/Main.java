@@ -21,14 +21,14 @@ public class Main {
         ArrayList<OrderList> orderLists = new ArrayList<OrderList>();
 
         person[0] = new PersonDetails("Martin","Gary",'M',"0123456789","mtg@email.com","001230127890");
-        managers[0] = new Manager("Manager", person[0], "abc123");
-        branch = new Branch("Petaling Jaya", managers[0], employees);
+        managers[0] = new Manager(person[0],"abc123", "Manager");
+        branch = new Branch("Petaling Jaya", managers[0]);
 
         person[1] = new PersonDetails("Gregor","Clegane",'M',"0123226545","gc1@email.com","000123141331");
-        employees[0]= new Employee("Cashier", person[1], "cba321");
+        employees[0]= new Employee(person[1],"Cashier", "cba321", branch);
 
         person[2] = new PersonDetails("Jon", "Snow", 'M',"01112806671","js1@gmal.com","901011141221");
-        employees[1] = new Employee("Cashier", person[2], "qwe123");
+        employees[1] = new Employee(person[2],"Cashier","qwe123", branch);
 
         product.add(new Product ("Alpo Dog Food","Dog Food", 60.00, 30));
         product.add(new Product ("Pedigree Dog Food","Dog Food", 50.00, 20));
@@ -118,32 +118,44 @@ public class Main {
         } while (menuOption != 2);
     }
 
-    public static OrderList modifyOrderList(String productCode, ArrayList<OrderItem> orderItem, ArrayList<OrderList> orderLists, int listNo){
+    public static OrderList modifyOrderList(String productCode, ArrayList<OrderItem> orderItem, ArrayList<OrderList> orderLists, int listNo) {
         Scanner scanner = new Scanner(System.in);
+        int list;
+        int editedQuantity;
 
-        for (int i = 0; i < OrderItem.getItemNo(); i++) {
+        for (int i = 0; i < orderItem.size(); i++) {
 
             if (orderItem.get(i).getProduct().getProdId().equals(productCode)) {
                 if (orderLists.get(listNo - 1).addOrderItem(orderItem.get(i))) {
                     orderLists.get(listNo - 1).receipt(false, 0);
                     break;
                 }
-            }
-            else if (i == OrderItem.getItemNo() - 1 && !"1".equals(productCode)) {
+            } else if (i == orderItem.size()-1 && !"1".equals(productCode)) {
                 System.out.println("No such barcode.");
                 break;
             }
         }
         if ("2".equals(productCode)) {
-            System.out.println("Please enter the order list number > ");
-            int list = scanner.nextInt();
+            do {
+                System.out.print("Please enter the order list number > ");
+                list = scanner.nextInt();
+                if (list < 1 || list > OrderList.getItemCount()) {
+                    System.out.println("Invalid order list number!");
+                }
+            } while (list < 1 || list > OrderList.getItemCount());
 
-            System.out.println("Please enter the quantity > ");
-            int editedQuantity = scanner.nextInt();
+            do {
+                System.out.print("Please enter the quantity > ");
+                editedQuantity = scanner.nextInt();
+                if (editedQuantity < 0) {
+                    System.out.println("Invalid quantity!");
+                }
+            } while (editedQuantity < 0);
 
             orderLists.get(listNo - 1).editQuantity(list, editedQuantity);
             orderLists.get(listNo - 1).receipt(false, 0);
         }
+
         return orderLists.get(listNo - 1);
     }
 

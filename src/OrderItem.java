@@ -1,7 +1,5 @@
 class OrderItem {
     private Product product;
-    private static int nextItemNo = 1;
-    private static int itemNo;
     private double amount;
     private int quantity = 0;
     private int nextQuantity = 1;
@@ -12,7 +10,6 @@ class OrderItem {
     public OrderItem(Product product) {
         this.product = product;
         amount = product.getPrice() * quantity;
-        itemNo = nextItemNo++;
     }
 
     //Getter
@@ -32,14 +29,6 @@ class OrderItem {
         return nextQuantity++;
     }
 
-    public static int getNextItemNo() {
-        return nextItemNo;
-    }
-
-    public static int getItemNo() {
-        return itemNo;
-    }
-
     //Setter
     public void setProduct(Product product) {
         this.product = product;
@@ -57,12 +46,8 @@ class OrderItem {
         this.nextQuantity = nextQuantity;
     }
 
-    public static void setNextItemNo(int nextItemNo) {
-        OrderItem.nextItemNo = nextItemNo;
-    }
-
     public boolean stockOut(int quantity){
-        if(product.getStockQuantity()> this.quantity){
+        if(product.getStockQuantity()> quantity){
             product.setStockQuantity(product.getStockQuantity()-quantity);
             this.quantity++;
             amount = quantity * product.getPrice();
