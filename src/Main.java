@@ -7,18 +7,16 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        int menuOption;
         int empOrManager;
-        boolean loginSuccess = false;
-        boolean back = false;
+        boolean loginSuccess;
 
         PersonDetails[] person = new PersonDetails[max_number];
         Manager[] managers = new Manager[max_number];
-        Branch branch = new Branch();
+        Branch branch;
         Employee[] employees = new Employee[max_number];
-        ArrayList<Product> product = new ArrayList<Product>();
-        ArrayList<OrderItem> orderItem = new ArrayList<OrderItem>();
-        ArrayList<OrderList> orderLists = new ArrayList<OrderList>();
+        ArrayList<Product> product = new ArrayList<>();
+        ArrayList<OrderItem> orderItem = new ArrayList<>();
+        ArrayList<OrderList> orderLists = new ArrayList<>();
 
         person[0] = new PersonDetails("Martin","Gary",'M',"0123456789","mtg@email.com","001230127890");
         managers[0] = new Manager(person[0],"abc123", "Manager");
@@ -76,7 +74,7 @@ public class Main {
         }while(true);
     }
 
-    public static void employeeMenuOptions(ArrayList<OrderItem> orderItem, ArrayList<OrderList> multipleOrderLists){
+    private static void employeeMenuOptions(ArrayList<OrderItem> orderItem, ArrayList<OrderList> multipleOrderLists){
         Scanner scanner = new Scanner(System.in);
         String productCode;
 
@@ -118,7 +116,7 @@ public class Main {
         } while (menuOption != 2);
     }
 
-    public static OrderList modifyOrderList(String productCode, ArrayList<OrderItem> orderItem, ArrayList<OrderList> orderLists, int listNo) {
+    private static OrderList modifyOrderList(String productCode, ArrayList<OrderItem> orderItem, ArrayList<OrderList> orderLists, int listNo) {
         Scanner scanner = new Scanner(System.in);
         int list;
         int editedQuantity;
@@ -161,7 +159,7 @@ public class Main {
 
 
 
-    public static void payment(OrderList orderList){
+    private static void payment(OrderList orderList){
         Scanner scanner = new Scanner(System.in);
         double amount;
             do {
@@ -175,7 +173,7 @@ public class Main {
             orderList.receipt(true, amount);
     }
 
-    public static void managerMenuOptions(){
+    private static void managerMenuOptions(){
         Scanner scanner = new Scanner(System.in);
 
         int menuOption;
