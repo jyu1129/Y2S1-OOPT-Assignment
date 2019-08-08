@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
+    //Define a max number for our system
     private static final int max_number = 999;
 
     public static void main(String[] args) {
@@ -9,11 +10,14 @@ public class Main {
 
         int empOrManager;
         boolean loginSuccess;
+        String username;
+        String password;
 
         PersonDetails[] person = new PersonDetails[max_number];
         Manager[] managers = new Manager[max_number];
         Branch branch;
         Employee[] employees = new Employee[max_number];
+        //Use ArrayList because it is mutable
         ArrayList<Product> product = new ArrayList<>();
         ArrayList<OrderItem> orderItem = new ArrayList<>();
         ArrayList<OrderList> orderLists = new ArrayList<>();
@@ -45,10 +49,19 @@ public class Main {
             System.out.print("> ");
 
             empOrManager = scanner.nextInt();
+            scanner.nextLine();
+
+            System.out.println("Login Page");
+            System.out.println("----------");
+            System.out.print("Username: ");
+            username = scanner.nextLine();
+
+            System.out.print("Password: ");
+            password = scanner.nextLine();
 
             switch (empOrManager) {
                 case 1:
-                    Login empLogin = new Login();
+                    Login empLogin = new Login(username,password);
                     loginSuccess = empLogin.employeeLogin(employees);
                     if(loginSuccess) {
                         employeeMenuOptions(orderItem, orderLists);
@@ -57,7 +70,7 @@ public class Main {
                         break;
                     }
                 case 2:
-                    Login mgrLogin = new Login();
+                    Login mgrLogin = new Login(username,password);
                     loginSuccess = mgrLogin.managerLogin(managers);
                     if(loginSuccess) {
                         managerMenuOptions();
@@ -74,6 +87,7 @@ public class Main {
         }while(true);
     }
 
+    //Menu Options for employees
     private static void employeeMenuOptions(ArrayList<OrderItem> orderItem, ArrayList<OrderList> multipleOrderLists){
         Scanner scanner = new Scanner(System.in);
         String productCode;
@@ -93,12 +107,21 @@ public class Main {
             scanner.nextLine();
             switch (menuOption) {
                 case 1:
+                    //Adds elements of multipleOrderLists array
                     multipleOrderLists.add(new OrderList());
                     do {
-                        System.out.print("\nEnter Item ID(1 to checkout, 2 to edit order list)> ");
-                        productCode = scanner.nextLine();
+                        do {
+                            System.out.print("\nEnter Item ID(1 to checkout, 2 to edit order list)> ");
+                            productCode = scanner.nextLine();
+                            //If the item list in order list is empty, it will show this output (Validate error)
+                            if (("1".equals(productCode) || "2".equals(productCode)) && OrderList.getItemCount() == 0) {
+                                System.out.println("Please add some items!");
+                            }
+                        }while(("1".equals(productCode) || "2".equals(productCode)) && OrderList.getItemCount() == 0);
+                        //Modify the current element of multipleOrderLists array
                         multipleOrderLists.set(OrderList.getOrderListNo() - 1, modifyOrderList(productCode, orderItem, multipleOrderLists, OrderList.getOrderListNo()));
                     }while (!"1".equals(productCode));
+                    //After checking out, it goes to payment
                     payment(multipleOrderLists.get(OrderList.getOrderListNo() - 1));
                     break;
                 case 2:
@@ -113,7 +136,7 @@ public class Main {
                     System.out.println("No such option!");
                     break;
             }
-        } while (menuOption != 2);
+        } while (menuOption != 3);
     }
 
     private static OrderList modifyOrderList(String productCode, ArrayList<OrderItem> orderItem, ArrayList<OrderList> orderLists, int listNo) {
@@ -123,20 +146,26 @@ public class Main {
 
         for (int i = 0; i < orderItem.size(); i++) {
 
+            //Compare product ID with the database
             if (orderItem.get(i).getProduct().getProdId().equals(productCode)) {
+                //To check if the addOrderItem function is successful. orderLists.get(listNo - 1) --> orderLists[listNo - 1]
                 if (orderLists.get(listNo - 1).addOrderItem(orderItem.get(i))) {
+                    //Show the receipt every items inputted
                     orderLists.get(listNo - 1).receipt(false, 0);
                     break;
                 }
+                //Only output "No such barcode" until the end element of the array if the product id is not found in the database
             } else if (i == orderItem.size()-1 && !"1".equals(productCode)) {
                 System.out.println("No such barcode.");
                 break;
             }
         }
+        //Edit order list function
         if ("2".equals(productCode)) {
             do {
                 System.out.print("Please enter the order list number > ");
                 list = scanner.nextInt();
+                //Validate error
                 if (list < 1 || list > OrderList.getItemCount()) {
                     System.out.println("Invalid order list number!");
                 }

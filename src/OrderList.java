@@ -4,8 +4,9 @@ class OrderList {
     private static int orderListNo = 0;
     private String orderNo;
     private static int nextOrderNo = 1;
-    private ArrayList<OrderItem> orderItem = new ArrayList<OrderItem>();
+    private ArrayList<OrderItem> orderItem = new ArrayList<>();
     private double totalAmount = 0;
+    //itemCount represents number of item list in order list
     private static int itemCount = 0;
 
     public OrderList() {
@@ -15,7 +16,9 @@ class OrderList {
 
     public boolean addOrderItem(OrderItem item) {
         for (int i = 0; i < itemCount; i++) {
+            //Compare product with the database
             if (orderItem.get(i).getProduct() == item.getProduct() && orderItem.get(i).stockOut(1)) {
+                //Adds amount of i element of orderItem to the totalAmount
                 totalAmount += orderItem.get(i).getAmount();
 
                 return true;
@@ -23,6 +26,7 @@ class OrderList {
         }
 
         try{
+            //Adds element to the orderItem Array
             orderItem.add(item);
             orderItem.get(itemCount).stockOut(1);
             totalAmount += orderItem.get(itemCount).getAmount();
@@ -40,14 +44,13 @@ class OrderList {
         if(quantity != 0) {
             if(orderItem.get(list).stockOut(quantity - orderItem.get(list).getQuantity())) {
                 orderItem.get(list).setQuantity(quantity);
-                orderItem.get(list).setNextQuantity(quantity + 1);
                 totalAmount += orderItem.get(list).getAmount();
             }
         }else {
             if(orderItem.get(list).stockOut(quantity - orderItem.get(list).getQuantity())) {
                 orderItem.get(list).setQuantity(quantity);
-                orderItem.get(list).setNextQuantity(quantity + 1);
                 totalAmount += orderItem.get(list).getAmount();
+                //Remove the list element of the orderItem Array
                 orderItem.remove(list);
                 itemCount--;
             }
@@ -85,7 +88,7 @@ class OrderList {
     }
 
     public void setItemCount(int itemCount) {
-        this.itemCount = itemCount;
+        OrderList.itemCount = itemCount;
     }
 
     //Getter

@@ -8,27 +8,22 @@ class Login {
     private String username;
     private String password;
 
-    public Login() {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Login Page");
-        System.out.println("----------");
-
-        System.out.print("Username: ");
-        username = scanner.nextLine();
-
-        System.out.print("Password: ");
-        password = scanner.nextLine();
+    public Login(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
+    //Login function for employee
     public boolean employeeLogin(Employee[] employeesArray) {
 
         for(int i = 0; i < Employee.getEmployeeNo(); i++ ) {
+            //Compare username and password with the database
             if (employeesArray[i].getEmployeeID().equals(username) && employeesArray[i].getPassword().equals(password)) {
                 System.out.println("Log in successful.\n");
                 System.out.println("Employee ID: " + employeesArray[i].getEmployeeID() + "\nEmployee Name: " + employeesArray[i].getFirstName() + " " + employeesArray[i].getLastName());
 
                 return true;
+            //Only output wrong username or password until the end element of the array if the username and password is not found in the database
             }else if (i == Employee.getEmployeeNo() - 1) {
                 System.out.println("Wrong username or password.\n");
             }
@@ -36,7 +31,7 @@ class Login {
         return false;
     }
 
-
+    //Login function for manager
     public boolean managerLogin(Manager[] managersArray){
 
         for (int i = 0; i < Manager.getManagerNo(); i++) {
@@ -51,4 +46,22 @@ class Login {
         }
         return false;
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+
 }

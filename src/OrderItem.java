@@ -2,7 +2,6 @@ class OrderItem {
     private Product product;
     private double amount;
     private int quantity = 0;
-    private int nextQuantity = 1;
 
     public OrderItem() {
     }
@@ -25,10 +24,6 @@ class OrderItem {
         return quantity;
     }
 
-    public int getNextQuantity() {
-        return nextQuantity++;
-    }
-
     //Setter
     public void setProduct(Product product) {
         this.product = product;
@@ -42,14 +37,12 @@ class OrderItem {
         this.quantity = quantity;
     }
 
-    public void setNextQuantity(int nextQuantity) {
-        this.nextQuantity = nextQuantity;
-    }
-
     public boolean stockOut(int quantity){
+        //To check if the stock quantity is enough
         if(product.getStockQuantity()> quantity){
+            //Deduct the product stock quantity
             product.setStockQuantity(product.getStockQuantity()-quantity);
-            this.quantity++;
+            this.quantity ++;
             amount = quantity * product.getPrice();
             return true;
         }
@@ -59,13 +52,12 @@ class OrderItem {
         }
     }
 
-    //Methods
     @Override
     public String toString() {
         return "OrderItem{" +
                 "product=" + product +
+                ", amount=" + amount +
                 ", quantity=" + quantity +
-                ", nextQuantity=" + nextQuantity +
                 '}';
     }
 
