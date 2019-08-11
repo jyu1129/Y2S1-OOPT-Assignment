@@ -64,18 +64,24 @@ public class Main {
                     Login empLogin = new Login(username,password);
                     loginSuccess = empLogin.employeeLogin(employees);
                     if(loginSuccess) {
+                        System.out.println("Log in successful.\n");
+                        System.out.println("Username: " + empLogin.getUsername() + "\nEmployee Name: " + employees[empLogin.getIndex()].getFirstName() + " " + employees[empLogin.getIndex()].getLastName());
                         employeeMenuOptions(orderItem, orderLists);
                         break;
                     }else{
+                        System.out.println("Login failed.");
                         break;
                     }
                 case 2:
                     Login mgrLogin = new Login(username,password);
                     loginSuccess = mgrLogin.managerLogin(managers);
                     if(loginSuccess) {
+                        System.out.println("Log in successful.\n");
+                        System.out.println("Username: " + mgrLogin.getUsername() + "\nEmployee Name: " + employees[mgrLogin.getIndex()].getFirstName() + " " + employees[mgrLogin.getIndex()].getLastName());
                         managerMenuOptions();
                         break;
                     }else{
+                        System.out.println("Login failed.");
                         break;
                     }
                 case 0:
