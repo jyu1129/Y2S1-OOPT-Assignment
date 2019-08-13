@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+
 public class Main {
     //Define a max number for our system
     private static final int max_number = 999;
@@ -10,8 +11,8 @@ public class Main {
 
         int empOrManager;
         boolean loginSuccess;
-        String username;
-        String password;
+        String username = null;
+        String password = null;
 
         PersonDetails[] person = new PersonDetails[max_number];
         Manager[] managers = new Manager[max_number];
@@ -51,13 +52,15 @@ public class Main {
             empOrManager = scanner.nextInt();
             scanner.nextLine();
 
-            System.out.println("Login Page");
-            System.out.println("----------");
-            System.out.print("Username: ");
-            username = scanner.nextLine();
+            if(empOrManager != 0) {
+                System.out.println("Login Page");
+                System.out.println("----------");
+                System.out.print("Username: ");
+                username = scanner.nextLine();
 
-            System.out.print("Password: ");
-            password = scanner.nextLine();
+                System.out.print("Password: ");
+                password = scanner.nextLine();
+            }
 
             switch (empOrManager) {
                 case 1:
@@ -86,6 +89,7 @@ public class Main {
                     }
                 case 0:
                     System.exit(0);
+                    break;
                 default:
                     System.out.println("No such option!");
                     break;
