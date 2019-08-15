@@ -90,8 +90,8 @@ public class Main {
                         employeeMenuOptions(orderItem, orderLists);
                         //Update all data into files
                         write objectOutput = new write();
-                        for(int i = 0; i < filepath.length; i++){
-                            objectOutput.WriteObjectToFile(managers, filepath[i]);
+                        for(String fPath : filepath){
+                            objectOutput.WriteObjectToFile(managers, fPath);
                         }
 
                         break;
