@@ -10,8 +10,12 @@ class OrderList {
     private double totalAmount = 0;
     //itemCount represents number of item list in order list
     private static int itemCount = 0;
+    //Initialize local date time object
+    private LocalDateTime dateObj;
+
 
     public OrderList() {
+        dateObj = LocalDateTime.now();
         this.orderNo = String.format("I%06d", nextOrderNo++);
         orderListNo++;
     }
@@ -60,7 +64,6 @@ class OrderList {
     }
 
     public void receipt(boolean paid, double amount){
-        LocalDateTime dateObj = LocalDateTime.now();
         DateTimeFormatter formatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         String formattedDate = dateObj.format(formatObj);
 
