@@ -1,3 +1,5 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 class OrderList {
 
@@ -58,6 +60,10 @@ class OrderList {
     }
 
     public void receipt(boolean paid, double amount){
+        LocalDateTime dateObj = LocalDateTime.now();
+        DateTimeFormatter formatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        String formattedDate = dateObj.format(formatObj);
+
         System.out.printf("%-4s%-30s%-9s%-7s%-8s\n\n","No.","Product Name","Quantity","Price","SubTotal");
         for(int i = 0; i < itemCount; i++) {
             System.out.printf("%-4d%-30s%-9d%-7.2f%-8.2f\n", i+1, orderItem.get(i).getProduct().getProdName(), orderItem.get(i).getQuantity(), orderItem.get(i).getProduct().getPrice(),
@@ -67,6 +73,7 @@ class OrderList {
         if(paid){
             System.out.printf("%-50s%-8.2f\n","Ringgit Malaysia", amount);
             System.out.printf("%-50s%-8.2f\n\n","Change", amount - totalAmount);
+            System.out.println("Paid: " + formattedDate);
         }
     }
 

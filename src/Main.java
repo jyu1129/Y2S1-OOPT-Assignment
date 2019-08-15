@@ -205,7 +205,7 @@ public class Main {
                 System.out.print("Please enter the amount of RM you want to pay > ");
                 amount = scanner.nextDouble();
                 if(amount < orderList.getTotalAmount()){
-                    System.out.println("The amount of RM you want to pay cannot be lower than the totalAmount price.");
+                    System.out.println("The amount of RM you want to pay cannot be lower than the total price.");
                 }
             } while (amount < orderList.getTotalAmount());
             System.out.printf("RM%.2f entered.\n", amount);
