@@ -11,12 +11,12 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-
+        
+        //Initialize variables and objects
         int empOrManager;
         boolean loginSuccess;
         String username = null;
         String password = null;
-
         PersonDetails[] person = new PersonDetails[max_number];
         Manager[] managers = new Manager[max_number];
         Branch branch = new Branch();
