@@ -57,8 +57,6 @@ public class Main {
             e.printStackTrace();
         }
 
-        System.out.println(product.get(8));
-
         do {
             System.out.println("Employee or Manager");
             System.out.println("-------------------");
@@ -90,9 +88,14 @@ public class Main {
                         employeeMenuOptions(orderItem, orderLists);
                         //Update all data into files
                         write objectOutput = new write();
-                        for(String fPath : filepath){
-                            objectOutput.WriteObjectToFile(managers, fPath);
-                        }
+
+                        objectOutput.WriteObjectToFile(person, filepath[0]);
+                        objectOutput.WriteObjectToFile(managers, filepath[1]);
+                        objectOutput.WriteObjectToFile(branch, filepath[2]);
+                        objectOutput.WriteObjectToFile(employees, filepath[3]);
+                        objectOutput.WriteObjectToFile(product, filepath[4]);
+                        objectOutput.WriteObjectToFile(orderItem, filepath[5]);
+                        objectOutput.WriteObjectToFile(orderLists, filepath[6]);
 
                         break;
                     }else{
