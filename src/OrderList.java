@@ -11,11 +11,13 @@ class OrderList {
     //itemCount represents number of item list in order list
     private static int itemCount = 0;
     //Initialize local date time object
-    private LocalDateTime dateObj;
+    private String formattedDate;
 
 
     public OrderList() {
-        dateObj = LocalDateTime.now();
+        LocalDateTime dateObj = LocalDateTime.now();
+        DateTimeFormatter formatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        formattedDate = dateObj.format(formatObj);
         this.orderNo = String.format("I%06d", nextOrderNo++);
         orderListNo++;
     }
@@ -64,9 +66,6 @@ class OrderList {
     }
 
     public void receipt(boolean paid, double amount){
-        DateTimeFormatter formatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-        String formattedDate = dateObj.format(formatObj);
-
         System.out.printf("%-4s%-30s%-9s%-7s%-8s\n\n","No.","Product Name","Quantity","Price","SubTotal");
         for(int i = 0; i < itemCount; i++) {
             System.out.printf("%-4d%-30s%-9d%-7.2f%-8.2f\n", i+1, orderItem.get(i).getProduct().getProdName(), orderItem.get(i).getQuantity(), orderItem.get(i).getProduct().getPrice(),
@@ -124,5 +123,9 @@ class OrderList {
 
     public static int getItemCount() {
         return itemCount;
+    }
+
+    public String getFormattedDate() {
+        return formattedDate;
     }
 }
