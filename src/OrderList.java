@@ -1,15 +1,16 @@
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-class OrderList {
+class OrderList implements Serializable {
 
     private String orderNo;
     private static int nextOrderNo = 1;
     private ArrayList<OrderItem> orderItem = new ArrayList<>();
     private double totalAmount = 0;
     //itemCount represents number of item list in order list
-    private static int itemCount = 0;
+    private int itemCount = 0;
     //Initialize local date time object
     private String formattedDate;
 
@@ -17,10 +18,12 @@ class OrderList {
     public OrderList() {
         LocalDateTime dateObj = LocalDateTime.now();
         DateTimeFormatter formatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        //Changes the date time format to dd-MM-yyyy HH:mm:ss
         formattedDate = dateObj.format(formatObj);
         this.orderNo = String.format("I%06d", nextOrderNo++);
     }
 
+    //
     public boolean addOrderItem(OrderItem item) {
         for (int i = 0; i < itemCount; i++) {
             //Compare product with the database
@@ -36,6 +39,7 @@ class OrderList {
             //Adds element to the orderItem Array
             orderItem.add(item);
             orderItem.get(itemCount).stockOut(1);
+            orderItem.get(itemCount).setQuantity(1);
             totalAmount += orderItem.get(itemCount).getAmount();
 
             itemCount++;
@@ -96,7 +100,7 @@ class OrderList {
     }
 
     public void setItemCount(int itemCount) {
-        OrderList.itemCount = itemCount;
+        this.itemCount = itemCount;
     }
 
     //Getter
@@ -117,7 +121,7 @@ class OrderList {
         return totalAmount;
     }
 
-    public static int getItemCount() {
+    public int getItemCount() {
         return itemCount;
     }
 

@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /*1. Implement a login() method, which ask the user for username and password and return the employees array element.
@@ -15,12 +16,12 @@ class Login {
     }
 
     //Login function for employee
-    public boolean employeeLogin(Employee[] employeesArray) {
+    public boolean employeeLogin(ArrayList<Employee> employeesArray) {
 
-        for(i = 0; i < employeesArray.length; i++ ) {
+        for(i = 0; i < employeesArray.size(); i++ ) {
 
             //Compare username and password with the database
-            if (employeesArray[i].getEmployeeID().equals(username) && employeesArray[i].getPassword().equals(password)) {
+            if (employeesArray.get(i).getEmployeeID().equals(username) && employeesArray.get(i).getPassword().equals(password)) {
                 return true;
             //Only output wrong username or password until the end element of the array if the username and password is not found in the database
             }
@@ -29,14 +30,13 @@ class Login {
     }
 
     //Login function for manager
-    public boolean managerLogin(Manager[] managersArray){
+    public boolean managerLogin(Manager manager){
 
-        for (i = 0; i < managersArray.length; i++) {
-            if (managersArray[i].getManagerID().equals(username) && managersArray[i].getPassword().equals(password)) {
-                return true;
-            }
+        if (manager.getManagerID().equals(username) && manager.getPassword().equals(password)) {
+            return true;
+        }else{
+            return false;
         }
-        return false;
     }
 
     public String getUsername() {
