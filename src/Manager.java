@@ -1,7 +1,6 @@
 import java.io.Serializable;
 
 class Manager extends PersonDetails implements Serializable {
-    private static int managerNo = 0;
     private static int nextManagerID = 1;
     private String managerID;
     private String password;
@@ -9,17 +8,12 @@ class Manager extends PersonDetails implements Serializable {
 
     public Manager(PersonDetails personDetails, String password, String jobTitle) {
         super(personDetails);
-        managerNo++;
         this.managerID = String.format("M%04d", nextManagerID);
         this.password = password;
         this.jobTitle = jobTitle;
     }
 
     //Getter
-    public static int getManagerNo() {
-        return managerNo;
-    }
-
     public String getManagerID() {
         return managerID;
     }

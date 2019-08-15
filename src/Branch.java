@@ -4,7 +4,6 @@ import java.util.StringJoiner;
 
 class Branch implements Serializable {
     //Variables
-    private static int branchNo = 0;
     private static int nextBranchId = 1;
     private String branchId;
     private String branchName;
@@ -15,17 +14,12 @@ class Branch implements Serializable {
     }
 
     public Branch(String branchName, Manager manager) {
-        branchNo++;
         this.branchId = String.format("B%02d",nextBranchId++);
         this.branchName = branchName;
         this.manager = manager;
     }
 
     //Getter
-    public static int getBranchNo() {
-        return branchNo;
-    }
-
     public String getBranchId() {
         return branchId;
     }

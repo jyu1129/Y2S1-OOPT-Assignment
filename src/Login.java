@@ -17,7 +17,8 @@ class Login {
     //Login function for employee
     public boolean employeeLogin(Employee[] employeesArray) {
 
-        for(i = 0; i < Employee.getEmployeeNo(); i++ ) {
+        for(i = 0; i < employeesArray.length; i++ ) {
+
             //Compare username and password with the database
             if (employeesArray[i].getEmployeeID().equals(username) && employeesArray[i].getPassword().equals(password)) {
                 return true;
@@ -30,7 +31,7 @@ class Login {
     //Login function for manager
     public boolean managerLogin(Manager[] managersArray){
 
-        for (i = 0; i < Manager.getManagerNo(); i++) {
+        for (i = 0; i < managersArray.length; i++) {
             if (managersArray[i].getManagerID().equals(username) && managersArray[i].getPassword().equals(password)) {
                 return true;
             }

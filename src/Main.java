@@ -11,7 +11,7 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        
+
         //Initialize variables and objects
         int empOrManager;
         boolean loginSuccess;
@@ -156,13 +156,13 @@ public class Main {
                             }
                         }while(("1".equals(productCode) || "2".equals(productCode)) && OrderList.getItemCount() == 0);
                         //Modify the current element of multipleOrderLists array
-                        orderLists.set(OrderList.getOrderListNo() - 1, modifyOrderList(productCode, orderItem, orderLists, OrderList.getOrderListNo()));
+                        orderLists.set(orderLists.size() - 1, modifyOrderList(productCode, orderItem, orderLists, orderLists.size() - 1));
                     }while (!"1".equals(productCode));
                     //After checking out, it goes to payment
-                    payment(orderLists.get(OrderList.getOrderListNo() - 1));
+                    payment(orderLists.get(orderLists.size() - 1));
                     break;
                 case 2:
-                    TransactionHistory transactionHistory = new TransactionHistory(orderLists, OrderList.getOrderListNo());
+                    TransactionHistory transactionHistory = new TransactionHistory(orderLists, orderLists.size());
                     break;
                 case 3:
                     break;
@@ -186,13 +186,13 @@ public class Main {
             //Compare product ID with the database
             if (orderItem.get(i).getProduct().getProdId().equals(productCode)) {
                 //To check if the addOrderItem function is successful. orderLists.get(listNo - 1) --> orderLists[listNo - 1]
-                if (orderLists.get(listNo - 1).addOrderItem(orderItem.get(i))) {
+                if (orderLists.get(listNo).addOrderItem(orderItem.get(i))) {
                     //Show the receipt every items inputted
-                    orderLists.get(listNo - 1).receipt(false, 0);
+                    orderLists.get(listNo).receipt(false, 0);
                     break;
                 }
                 //Only output "No such barcode" until the end element of the array if the product id is not found in the database
-            } else if (i == orderItem.size()-1 && !"1".equals(productCode)) {
+            } else if (i == orderItem.size() - 1 && !"1".equals(productCode)) {
                 System.out.println("No such barcode.");
                 break;
             }
@@ -216,11 +216,11 @@ public class Main {
                 }
             } while (editedQuantity < 0);
 
-            orderLists.get(listNo - 1).editQuantity(editedList, editedQuantity);
-            orderLists.get(listNo - 1).receipt(false, 0);
+            orderLists.get(listNo).editQuantity(editedList, editedQuantity);
+            orderLists.get(listNo).receipt(false, 0);
         }
 
-        return orderLists.get(listNo - 1);
+        return orderLists.get(listNo);
     }
 
     private static void payment(OrderList orderList){

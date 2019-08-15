@@ -1,9 +1,9 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+
 class OrderList {
 
-    private static int orderListNo = 0;
     private String orderNo;
     private static int nextOrderNo = 1;
     private ArrayList<OrderItem> orderItem = new ArrayList<>();
@@ -19,7 +19,6 @@ class OrderList {
         DateTimeFormatter formatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         formattedDate = dateObj.format(formatObj);
         this.orderNo = String.format("I%06d", nextOrderNo++);
-        orderListNo++;
     }
 
     public boolean addOrderItem(OrderItem item) {
@@ -101,9 +100,6 @@ class OrderList {
     }
 
     //Getter
-    public static int getOrderListNo() {
-        return orderListNo;
-    }
 
     public String getOrderNo() {
         return orderNo;
