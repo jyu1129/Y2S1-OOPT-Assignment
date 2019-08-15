@@ -1,4 +1,6 @@
-class Manager extends PersonDetails {
+import java.io.Serializable;
+
+class Manager extends PersonDetails implements Serializable {
     private static int managerNo = 0;
     private static int nextManagerID = 1;
     private String managerID;

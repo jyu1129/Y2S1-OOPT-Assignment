@@ -1,5 +1,8 @@
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.*;
 
 
 public class Main {
@@ -16,30 +19,45 @@ public class Main {
 
         PersonDetails[] person = new PersonDetails[max_number];
         Manager[] managers = new Manager[max_number];
-        Branch branch;
+        Branch branch = new Branch();
         Employee[] employees = new Employee[max_number];
         //Use ArrayList because it is mutable
         ArrayList<Product> product = new ArrayList<>();
         ArrayList<OrderItem> orderItem = new ArrayList<>();
         ArrayList<OrderList> orderLists = new ArrayList<>();
 
-        person[0] = new PersonDetails("Martin","Gary",'M',"0123456789","mtg@email.com","001230127890");
-        managers[0] = new Manager(person[0],"abc123", "Manager");
-        branch = new Branch("Petaling Jaya", managers[0]);
+        //Initialize all filepath
+        String[] filepath = new String[7];
+        filepath[0] = "./obj/person.bin";
+        filepath[1] = "./obj/managers.bin";
+        filepath[2] = "./obj/branch.bin";
+        filepath[3] = "./obj/employees.bin";
+        filepath[4] = "./obj/product.bin";
+        filepath[5] = "./obj/orderItem.bin";
+        filepath[6] = "./obj/orderLists.bin";
 
-        person[1] = new PersonDetails("Gregor","Clegane",'M',"0123226545","gc1@email.com","000123141331");
-        employees[0]= new Employee(person[1],"Cashier", "cba321", branch);
+        try {
+            FileInputStream[] fis = new FileInputStream[filepath.length];
+            ObjectInputStream[] ois = new ObjectInputStream[filepath.length];
+            for(int i = 0; i < filepath.length; i++){
+                fis[i] = new FileInputStream(filepath[i]);
+                ois[i] = new ObjectInputStream(fis[i]);
+            }
+            person = (PersonDetails[]) ois[0].readObject();
+            managers = (Manager[]) ois[1].readObject();
+            branch = (Branch) ois[2].readObject();
+            employees = (Employee[]) ois[3].readObject();
+            product = (ArrayList<Product>) ois[4].readObject();
+            orderItem = (ArrayList<OrderItem>) ois[5].readObject();
+            orderLists = (ArrayList<OrderList>) ois[6].readObject();
+            for(int i = 0; i < filepath.length; i++){
+                ois[i].close();
+            }
+        } catch (ClassNotFoundException | IOException e) {
+            e.printStackTrace();
+        }
 
-        person[2] = new PersonDetails("Jon", "Snow", 'M',"01112806671","js1@gmal.com","901011141221");
-        employees[1] = new Employee(person[2],"Cashier","qwe123", branch);
-
-        product.add(new Product ("Alpo Dog Food","Dog Food", 60.00, 30));
-        product.add(new Product ("Pedigree Dog Food","Dog Food", 50.00, 20));
-        product.add(new Product ("Merrick Dog Food","Dog Food", 90.00, 50));
-
-        orderItem.add(new OrderItem(product.get(0)));
-        orderItem.add(new OrderItem(product.get(1)));
-        orderItem.add(new OrderItem(product.get(2)));
+        System.out.println(product.get(8));
 
         do {
             System.out.println("Employee or Manager");
@@ -70,6 +88,12 @@ public class Main {
                         System.out.println("Log in successful.\n");
                         System.out.println("Username: " + empLogin.getUsername() + "\nEmployee Name: " + employees[empLogin.getIndex()].getFirstName() + " " + employees[empLogin.getIndex()].getLastName());
                         employeeMenuOptions(orderItem, orderLists);
+                        //Update all data into files
+                        write objectOutput = new write();
+                        for(int i = 0; i < filepath.length; i++){
+                            objectOutput.WriteObjectToFile(managers, filepath[i]);
+                        }
+
                         break;
                     }else{
                         System.out.println("Login failed.");
@@ -80,7 +104,7 @@ public class Main {
                     loginSuccess = mgrLogin.managerLogin(managers);
                     if(loginSuccess) {
                         System.out.println("Log in successful.\n");
-                        System.out.println("Username: " + mgrLogin.getUsername() + "\nEmployee Name: " + employees[mgrLogin.getIndex()].getFirstName() + " " + employees[mgrLogin.getIndex()].getLastName());
+                        System.out.println("Username: " + mgrLogin.getUsername() + "\nManager Name: " + employees[mgrLogin.getIndex()].getFirstName() + " " + employees[mgrLogin.getIndex()].getLastName());
                         managerMenuOptions();
                         break;
                     }else{
@@ -98,7 +122,7 @@ public class Main {
     }
 
     //Menu Options for employees
-    private static void employeeMenuOptions(ArrayList<OrderItem> orderItem, ArrayList<OrderList> multipleOrderLists){
+    private static void employeeMenuOptions(ArrayList<OrderItem> orderItem, ArrayList<OrderList> orderLists){
         Scanner scanner = new Scanner(System.in);
         String productCode;
 
@@ -118,7 +142,7 @@ public class Main {
             switch (menuOption) {
                 case 1:
                     //Adds elements of multipleOrderLists array
-                    multipleOrderLists.add(new OrderList());
+                    orderLists.add(new OrderList());
                     do {
                         do {
                             System.out.print("\nEnter Item ID(1 to checkout, 2 to edit order list)> ");
@@ -129,13 +153,13 @@ public class Main {
                             }
                         }while(("1".equals(productCode) || "2".equals(productCode)) && OrderList.getItemCount() == 0);
                         //Modify the current element of multipleOrderLists array
-                        multipleOrderLists.set(OrderList.getOrderListNo() - 1, modifyOrderList(productCode, orderItem, multipleOrderLists, OrderList.getOrderListNo()));
+                        orderLists.set(OrderList.getOrderListNo() - 1, modifyOrderList(productCode, orderItem, orderLists, OrderList.getOrderListNo()));
                     }while (!"1".equals(productCode));
                     //After checking out, it goes to payment
-                    payment(multipleOrderLists.get(OrderList.getOrderListNo() - 1));
+                    payment(orderLists.get(OrderList.getOrderListNo() - 1));
                     break;
                 case 2:
-                    TransactionHistory transactionHistory = new TransactionHistory(multipleOrderLists, OrderList.getOrderListNo());
+                    TransactionHistory transactionHistory = new TransactionHistory(orderLists, OrderList.getOrderListNo());
                     break;
                 case 3:
                     break;
@@ -151,7 +175,7 @@ public class Main {
 
     private static OrderList modifyOrderList(String productCode, ArrayList<OrderItem> orderItem, ArrayList<OrderList> orderLists, int listNo) {
         Scanner scanner = new Scanner(System.in);
-        int list;
+        int editedList;
         int editedQuantity;
 
         for (int i = 0; i < orderItem.size(); i++) {
@@ -174,12 +198,12 @@ public class Main {
         if ("2".equals(productCode)) {
             do {
                 System.out.print("Please enter the order list number > ");
-                list = scanner.nextInt();
+                editedList = scanner.nextInt();
                 //Validate error
-                if (list < 1 || list > OrderList.getItemCount()) {
+                if (editedList < 1 || editedList > OrderList.getItemCount()) {
                     System.out.println("Invalid order list number!");
                 }
-            } while (list < 1 || list > OrderList.getItemCount());
+            } while (editedList < 1 || editedList > OrderList.getItemCount());
 
             do {
                 System.out.print("Please enter the quantity > ");
@@ -189,14 +213,12 @@ public class Main {
                 }
             } while (editedQuantity < 0);
 
-            orderLists.get(listNo - 1).editQuantity(list, editedQuantity);
+            orderLists.get(listNo - 1).editQuantity(editedList, editedQuantity);
             orderLists.get(listNo - 1).receipt(false, 0);
         }
 
         return orderLists.get(listNo - 1);
     }
-
-
 
     private static void payment(OrderList orderList){
         Scanner scanner = new Scanner(System.in);

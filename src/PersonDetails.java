@@ -1,4 +1,6 @@
-class PersonDetails {
+import java.io.Serializable;
+
+class PersonDetails implements Serializable {
     protected String firstName;
     protected String lastName;
     protected char gender;

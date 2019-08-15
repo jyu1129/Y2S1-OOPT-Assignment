@@ -1,4 +1,6 @@
-class OrderItem {
+import java.io.Serializable;
+
+class OrderItem implements Serializable {
     private Product product;
     private double amount;
     private int quantity = 0;

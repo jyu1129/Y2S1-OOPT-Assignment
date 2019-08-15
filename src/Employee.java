@@ -1,4 +1,6 @@
-class Employee extends PersonDetails {
+import java.io.Serializable;
+
+class Employee extends PersonDetails implements Serializable {
     //Variables
     private static int employeeNo = 0;
     private static int nextEmployeeID = 1;

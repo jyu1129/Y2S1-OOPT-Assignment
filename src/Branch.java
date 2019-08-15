@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.StringJoiner;
 
-class Branch {
+class Branch implements Serializable {
     //Variables
     private static int branchNo = 0;
     private static int nextBranchId = 1;
