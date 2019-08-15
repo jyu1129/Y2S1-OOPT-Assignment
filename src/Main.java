@@ -86,22 +86,10 @@ public class Main {
                         System.out.println("Log in successful.\n");
                         System.out.println("Username: " + empLogin.getUsername() + "\nEmployee Name: " + employees[empLogin.getIndex()].getFirstName() + " " + employees[empLogin.getIndex()].getLastName());
                         employeeMenuOptions(orderItem, orderLists);
-                        //Update all data into files
-                        write objectOutput = new write();
-
-                        objectOutput.WriteObjectToFile(person, filepath[0]);
-                        objectOutput.WriteObjectToFile(managers, filepath[1]);
-                        objectOutput.WriteObjectToFile(branch, filepath[2]);
-                        objectOutput.WriteObjectToFile(employees, filepath[3]);
-                        objectOutput.WriteObjectToFile(product, filepath[4]);
-                        objectOutput.WriteObjectToFile(orderItem, filepath[5]);
-                        objectOutput.WriteObjectToFile(orderLists, filepath[6]);
-
-                        break;
                     }else{
                         System.out.println("Login failed.");
-                        break;
                     }
+                    break;
                 case 2:
                     Login mgrLogin = new Login(username,password);
                     loginSuccess = mgrLogin.managerLogin(managers);
@@ -109,12 +97,22 @@ public class Main {
                         System.out.println("Log in successful.\n");
                         System.out.println("Username: " + mgrLogin.getUsername() + "\nManager Name: " + employees[mgrLogin.getIndex()].getFirstName() + " " + employees[mgrLogin.getIndex()].getLastName());
                         managerMenuOptions();
-                        break;
                     }else{
                         System.out.println("Login failed.");
-                        break;
                     }
+                    break;
                 case 0:
+                    //Update all data into files
+                    write objectOutput = new write();
+
+                    objectOutput.WriteObjectToFile(person, filepath[0]);
+                    objectOutput.WriteObjectToFile(managers, filepath[1]);
+                    objectOutput.WriteObjectToFile(branch, filepath[2]);
+                    objectOutput.WriteObjectToFile(employees, filepath[3]);
+                    objectOutput.WriteObjectToFile(product, filepath[4]);
+                    objectOutput.WriteObjectToFile(orderItem, filepath[5]);
+                    objectOutput.WriteObjectToFile(orderLists, filepath[6]);
+                    //Terminates the program
                     System.exit(0);
                     break;
                 default:
@@ -137,7 +135,6 @@ public class Main {
             System.out.println("1. Sales Order");
             System.out.println("2. Transaction History");
             System.out.println("3. Logout");
-            System.out.println("0. Exit");
             System.out.print("> ");
 
             menuOption = scanner.nextInt();
@@ -165,9 +162,6 @@ public class Main {
                     TransactionHistory transactionHistory = new TransactionHistory(orderLists, orderLists.size());
                     break;
                 case 3:
-                    break;
-                case 0:
-                    System.exit(0);
                     break;
                 default:
                     System.out.println("No such option!");
