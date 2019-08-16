@@ -512,10 +512,6 @@ class Manager extends PersonDetails implements Serializable {
     }
 
     // Setter
-    public void setManagerID(String managerID) {
-        this.managerID = managerID;
-    }
-
     public void setPassword(String password) {
         this.password = password;
     }

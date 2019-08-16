@@ -118,7 +118,6 @@ class OrderList implements Serializable {
     }
 
     //Getter
-
     public String getOrderNo() {
         return orderNo;
     }

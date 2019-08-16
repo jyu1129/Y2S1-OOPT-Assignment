@@ -3,10 +3,6 @@ import java.util.Scanner;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
-/*1. Implement a login() method, which ask the user for username and password and return the employees array element.
- The system will compare the username and password with Employee ID and Password in array of object in Employee class and
- obtain the employees array element by using for loop. If an invalid username or password is entered, continue to prompt
- for valid login details.*/
 class Login {
     private String username;
     private String password;
@@ -16,18 +12,6 @@ class Login {
         this.username = username;
         this.password = password;
     }
-
-    // Login time
-    public String currentTime() {
-        Date now = new Date();
-
-        SimpleDateFormat formatTime = new SimpleDateFormat("hh.mm aa");
-
-        String loginTime = formatTime.format(now);
-
-        return loginTime;
-    }
-
     // Login function for employee
     public boolean employeeLogin(ArrayList<Employee> employeesArray) {
 
@@ -54,8 +38,23 @@ class Login {
         }
     }
 
+    // Login time
+    public String currentTime() {
+        Date now = new Date();
+
+        SimpleDateFormat formatTime = new SimpleDateFormat("hh.mm aa");
+
+        String loginTime = formatTime.format(now);
+
+        return loginTime;
+    }
+
     public String getUsername() {
         return username;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public int getIndex() {
@@ -64,10 +63,6 @@ class Login {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public void setPassword(String password) {

@@ -76,7 +76,7 @@ public class Main {
                 empOrManager = -1;
             }
 
-            if (empOrManager != 0) {
+            if (empOrManager == 1 || empOrManager == 2) {
                 System.out.println("Login Page");
                 System.out.println("----------");
                 System.out.print("Username: ");
@@ -161,6 +161,7 @@ public class Main {
         Employee employee = new Employee();
 
         int menuOption;
+        int count = 0;
 
         do {
             System.out.println("Menu Options");
@@ -212,6 +213,11 @@ public class Main {
                 }
                 break;
             case 3:
+                Logout empLogout = new Logout();
+                count++;
+                for(int i = 0; i < count; i++) {
+                    System.out.println("\n" + userName[i] + " has logout at " + empLogout.currentTime() + "\n");
+                }
                 break;
             default:
                 System.out.println("No such option!");

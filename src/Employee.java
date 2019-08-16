@@ -5,6 +5,7 @@ import java.util.Scanner;
 class Employee extends PersonDetails implements Serializable {
     //Variables
     private static int nextEmployeeID = 1;
+    private String jobTitle;
     private String employeeID;
     private String password;
     private Branch branch;
@@ -14,53 +15,11 @@ class Employee extends PersonDetails implements Serializable {
 
     public Employee(PersonDetails personDetails, String jobTitle, String password, Branch branch) {
         super(personDetails);
+        this.jobTitle = jobTitle;
         this.employeeID = String.format("S%04d", nextEmployeeID++);
         this.password = password;
         this.branch = branch;
     }
-
-    //Getter
-    public static int getNextEmployeeID() {
-        return nextEmployeeID;
-    }
-
-    public String getEmployeeID() {
-        return employeeID;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public Branch getBranch() {
-        return branch;
-    }
-
-    //Setter
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setBranch(Branch branch) {
-        this.branch = branch;
-    }
-
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "employeeID='" + employeeID + '\'' +
-                ", password='" + password + '\'' +
-                ", branch=" + branch +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", gender=" + gender +
-                ", phoneNo='" + phoneNo + '\'' +
-                ", email='" + email + '\'' +
-                ", icNo='" + icNo + '\'' +
-                '}';
-    }
-
 
     public OrderList modifyOrderList(String productCode, ArrayList<OrderItem> orderItem, ArrayList<OrderList> orderLists, int listNo) {
         Scanner scanner = new Scanner(System.in);
@@ -164,4 +123,50 @@ class Employee extends PersonDetails implements Serializable {
         orderLists.get(selection - 1).receipt(true, orderLists.get(selection - 1).getAmount());
     }
 
+    //Getter
+    public static int getNextEmployeeID() {
+        return nextEmployeeID;
+    }
+
+    public String getEmployeeID() {
+        return employeeID;
+    }
+
+    public String getJobTitle(){return jobTitle; }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public Branch getBranch() {
+        return branch;
+    }
+
+    //Setter
+    public void setJobTitle(String jobTitle){
+        this.jobTitle = jobTitle;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setBranch(Branch branch) {
+        this.branch = branch;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "employeeID='" + employeeID + '\'' +
+                ", password='" + password + '\'' +
+                ", branch=" + branch +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", gender=" + gender +
+                ", phoneNo='" + phoneNo + '\'' +
+                ", email='" + email + '\'' +
+                ", icNo='" + icNo + '\'' +
+                '}';
+    }
 }
