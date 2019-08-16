@@ -1,10 +1,8 @@
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
-import java.lang.reflect.Array;
 import java.util.*;
 
 
@@ -57,6 +55,8 @@ public class Main {
             e.printStackTrace();
         }
 
+        bootupScreen();
+
         do {
             System.out.println("Employee or Manager");
             System.out.println("-------------------");
@@ -85,7 +85,7 @@ public class Main {
                     if(loginSuccess) {
                         System.out.println("Log in successful.\n");
                         System.out.println("Username: " + empLogin.getUsername() + "\nEmployee Name: " + employees.get(empLogin.getIndex()).getFirstName() + " " + employees.get(empLogin.getIndex()).getLastName());
-                        employeeMenuOptions(orderItem, orderLists, product);
+                        employeeMenuOptions(orderItem, orderLists);
                     }else{
                         System.out.println("Login failed.");
                     }
@@ -96,7 +96,7 @@ public class Main {
                     if(loginSuccess) {
                         System.out.println("Log in successful.\n");
                         System.out.println("Username: " + mgrLogin.getUsername() + "\nManager Name: " + employees.get(mgrLogin.getIndex()).getFirstName() + " " + employees.get(mgrLogin.getIndex()).getLastName());
-                        managerMenuOptions(product,employees);
+                        managerMenuOptions(product, employees, orderLists);
                     }else{
                         System.out.println("Login failed.");
                     }
@@ -128,7 +128,6 @@ public class Main {
             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
             objectOut.writeObject(serObj);
             objectOut.close();
-            System.out.println("The Object was successfully written to a file");
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -137,7 +136,7 @@ public class Main {
 
 
     //Menu Options for employees
-    private static void employeeMenuOptions(ArrayList<OrderItem> orderItem, ArrayList<OrderList> orderLists, ArrayList<Product> products){
+    private static void employeeMenuOptions(ArrayList<OrderItem> orderItem, ArrayList<OrderList> orderLists){
         Scanner scanner = new Scanner(System.in);
         String productCode;
         Employee employee = new Employee();
@@ -149,8 +148,7 @@ public class Main {
             System.out.println("------------");
             System.out.println("1. Sales Order");
             System.out.println("2. Transaction History");
-            System.out.println("3. Daily Report");
-            System.out.println("4. Logout");
+            System.out.println("3. Logout");
             System.out.print("> ");
 
             menuOption = scanner.nextInt();
@@ -185,18 +183,15 @@ public class Main {
                     }
                     break;
                 case 3:
-                    employee.dailyReport(orderLists, products);
-                    break;
-                case 4:
                     break;
                 default:
                     System.out.println("No such option!");
                     break;
             }
-        } while (menuOption != 4);
+        } while (menuOption != 3);
     }
 
-    private static void managerMenuOptions(ArrayList<Product> products, ArrayList<Employee> employees){
+    private static void managerMenuOptions(ArrayList<Product> products, ArrayList<Employee> employees, ArrayList<OrderList> orderLists){
         Scanner scanner = new Scanner(System.in);
         Manager manager = new Manager();
 
@@ -207,7 +202,8 @@ public class Main {
             System.out.println("------------");
             System.out.println("1. Add or edit Product Detail");
             System.out.println("2. Add or edit Employee Detail");
-            System.out.println("3. Logout");
+            System.out.println("3. Daily Report");
+            System.out.println("4. Logout");
             System.out.print("> ");
 
             menuOption = scanner.nextInt();
@@ -219,12 +215,25 @@ public class Main {
                     manager.modifyStaff(employees);
                     break;
                 case 3:
+                    manager.dailyReport(orderLists, products);
+                    break;
+                case 4:
                     break;
                 default:
                     System.out.println("No such option!");
                     break;
             }
-        } while (menuOption != 3);
+        } while (menuOption != 4);
     }
 
+    private static void bootupScreen(){
+        System.out.println(" ____  _____ _____    ____  _____  ____  ____  _____   _ ");
+        System.out.println("/  __\\/  __//__ __\\  / ___\\/__ __\\/  _ \\/  __\\/  __/  / \\");
+        System.out.println("|  \\/||  \\    / \\    |    \\  / \\  | / \\||  \\/||  \\    | |");
+        System.out.println("|  __/|  /_   | |    \\___ |  | |  | \\_/||    /|  /_   | |");
+        System.out.println("\\_/   \\____\\  \\_/    \\____/  \\_/  \\____/\\_/\\_\\\\____\\  \\_/");
+        System.out.println("Welcome to Pet Store 1 !!!\n");
+
+
+    }
 }

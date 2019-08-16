@@ -159,45 +159,9 @@ class Employee extends PersonDetails implements Serializable {
         for (int i = 0; i < orderLists.size(); i++) {
             System.out.printf("%-4d%-10s%10.2f\n", i + 1, orderLists.get(i).getOrderNo(), orderLists.get(i).getTotalAmount());
         }
-        System.out.println("Please select to display details: ");
-        displayTransactionHistoryDetails(scanner.nextInt() - 1, orderLists);
+        System.out.print("Please select to display details: ");
+        int selection = scanner.nextInt();
+        orderLists.get(selection - 1).receipt(true, orderLists.get(selection - 1).getAmount());
     }
 
-    private void displayTransactionHistoryDetails(int index, ArrayList<OrderList> orderLists){
-        System.out.printf("%-4s%-30s%-15s%-15s%-15s\n", "No.", "Product Name", "Quantity", "Price", "SubTotal");
-        System.out.println("---------------------------------------------------------------------------");
-        for (int j = 0; j < orderLists.get(index).getOrderItem().size(); j++) {
-            System.out.printf("%-4d%-30s%-15d%-15.2f%-15.2f\n\n", index + 1, orderLists.get(index).getOrderItem().get(j).getProduct().getProdName(), orderLists.get(index).getOrderItem().get(j).getQuantity(),
-                    orderLists.get(index).getOrderItem().get(j).getProduct().getPrice(), orderLists.get(index).getOrderItem().get(j).getAmount());
-        }
-        System.out.println("----------------------------------------------------------------------------------------------");
-        System.out.printf("%-50s%-3f\n", "RM\n\n", orderLists.get(index).getTotalAmount());
-        System.out.println("----------------------------------------------------------------------------------------------");
-    }
-
-    public void dailyReport(ArrayList<OrderList> orderList, ArrayList<Product> products){
-        int soldQuantity[] = new int[products.size()];
-
-        for(int i = 0;i < products.size(); i++){
-            soldQuantity[i] = 0;
-        }
-
-        for(int i = 0; i < products.size(); i++){
-            for(int j = 0; j < orderList.size(); j++){
-                for(int k = 0; k < orderList.size(); k++){
-                    if(orderList.get(j).getOrderItem().get(k).getProduct().getProdId().equals(products.get(i).getProdId())){
-                        soldQuantity[i] += orderList.get(i).getOrderItem().get(k).getQuantity();
-                    }
-                }
-            }
-        }
-
-        System.out.println("Daily Report");
-        System.out.println("----------------------------");
-        System.out.printf("%-4s%-20s%-30s%-20s%-20s%-10s\n","No.","Product ID", "Product Name", "Stock Quantity", "Sold Out", "Unit Price");
-        System.out.println("----------------------------------------------------------------------------------------------------------------");
-        for(int i = 0; i < products.size(); i++){
-            System.out.format("%-4d%-20s%-30s%-20d%-20d%-10.2f\n", i + 1, products.get(i).getProdId(), products.get(i).getProdName(), products.get(i).getStockQuantity(), soldQuantity[i], products.get(i).getPrice());
-        }
-    }
 }

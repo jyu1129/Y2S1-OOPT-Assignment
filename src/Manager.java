@@ -398,6 +398,32 @@ class Manager extends PersonDetails implements Serializable {
         }
     }
 
+    public void dailyReport(ArrayList<OrderList> orderList, ArrayList<Product> products){
+        int soldQuantity[] = new int[products.size()];
+
+        for(int i = 0;i < products.size(); i++){
+            soldQuantity[i] = 0;
+        }
+
+        for(int i = 0; i < products.size(); i++){
+            for(int j = 0; j < orderList.size(); j++){
+                for(int k = 0; k < orderList.size(); k++){
+                    if(orderList.get(j).getOrderItem().get(k).getProduct().getProdId().equals(products.get(i).getProdId())){
+                        soldQuantity[i] += orderList.get(i).getOrderItem().get(k).getQuantity();
+                    }
+                }
+            }
+        }
+
+        System.out.println("Daily Report");
+        System.out.println("----------------------------");
+        System.out.printf("%-4s%-20s%-30s%-20s%-20s%-10s\n","No.","Product ID", "Product Name", "Stock Quantity", "Sold Out", "Unit Price");
+        System.out.println("----------------------------------------------------------------------------------------------------------------");
+        for(int i = 0; i < products.size(); i++){
+            System.out.format("%-4d%-20s%-30s%-20d%-20d%-10.2f\n", i + 1, products.get(i).getProdId(), products.get(i).getProdName(), products.get(i).getStockQuantity(), soldQuantity[i], products.get(i).getPrice());
+        }
+    }
+
     //Getter
     public String getManagerID() {
         return managerID;

@@ -11,6 +11,7 @@ class OrderList implements Serializable {
     private double totalAmount = 0;
     //itemCount represents number of item list in order list
     private int itemCount = 0;
+    private double amount;
     //Initialize local date time object
     private String formattedDate;
 
@@ -69,6 +70,11 @@ class OrderList implements Serializable {
     }
 
     public void receipt(boolean paid, double amount){
+        this.amount = amount;
+        if(paid) {
+            System.out.println("Receipt");
+            System.out.println("=======");
+        }
         System.out.printf("%-4s%-30s%-9s%-7s%-8s\n\n","No.","Product Name","Quantity","Price","SubTotal");
         for(int i = 0; i < itemCount; i++) {
             System.out.printf("%-4d%-30s%-9d%-7.2f%-8.2f\n", i+1, orderItem.get(i).getProduct().getProdName(), orderItem.get(i).getQuantity(), orderItem.get(i).getProduct().getPrice(),
@@ -76,9 +82,9 @@ class OrderList implements Serializable {
         }
         System.out.printf("%-50s%-8.2f\n","Total", totalAmount);
         if(paid){
-            System.out.printf("%-50s%-8.2f\n","Ringgit Malaysia", amount);
-            System.out.printf("%-50s%-8.2f\n\n","Change", amount - totalAmount);
-            System.out.println("Paid: " + formattedDate);
+            System.out.printf("%-50s%-8.2f\n","Ringgit Malaysia", this.amount);
+            System.out.printf("%-50s%-8.2f\n\n","Change", this.amount - totalAmount);
+            System.out.println("Paid: " + formattedDate + "\n");
         }
     }
 
@@ -101,6 +107,14 @@ class OrderList implements Serializable {
 
     public void setItemCount(int itemCount) {
         this.itemCount = itemCount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public void setFormattedDate(String formattedDate) {
+        this.formattedDate = formattedDate;
     }
 
     //Getter
@@ -127,5 +141,9 @@ class OrderList implements Serializable {
 
     public String getFormattedDate() {
         return formattedDate;
+    }
+
+    public double getAmount() {
+        return amount;
     }
 }
