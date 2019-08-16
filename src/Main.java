@@ -6,11 +6,15 @@ import java.io.ObjectOutputStream;
 import java.util.*;
 
 public class Main {
+    // Use Array to store username for logout
+    private static String[] userName = new String[999];
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
         // Initialize variables and objects
         int empOrManager;
+        int count = 0;
         boolean loginSuccess;
         String username = null;
         String password = null;
@@ -77,9 +81,16 @@ public class Main {
                 System.out.println("----------");
                 System.out.print("Username: ");
                 username = scanner.nextLine();
+                count++;
 
                 System.out.print("Password: ");
                 password = scanner.nextLine();
+            }
+
+            for (int i = 0; i < count; i++) {
+                // for(int j = 0; j < count; j++)
+                // userName = new String[count];
+                userName[i] = username;
             }
 
             switch (empOrManager) {
@@ -91,6 +102,7 @@ public class Main {
                     System.out.println("Username: " + empLogin.getUsername() + "\nEmployee Name: "
                             + employees.get(empLogin.getIndex()).getFirstName() + " "
                             + employees.get(empLogin.getIndex()).getLastName());
+                    System.out.println(empLogin.getUsername() + " has login at " + empLogin.currentTime() + "\n");
                     employeeMenuOptions(orderItem, orderLists);
                 } else {
                     System.out.println("Login failed.");
