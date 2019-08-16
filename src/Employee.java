@@ -35,7 +35,7 @@ class Employee extends PersonDetails implements Serializable {
                     break;
                 }
                 //Only output "No such barcode" until the end element of the array if the product id is not found in the database
-            } else if (i == orderItem.size() - 1 && !"1".equals(productCode)) {
+            } else if (i == orderItem.size() - 1 && !"1".equals(productCode) && !"2".equals(productCode) && !"3".equals(productCode)) {
                 System.out.println("No such barcode.");
                 break;
             }

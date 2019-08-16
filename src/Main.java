@@ -182,8 +182,7 @@ public class Main {
                 orderLists.add(new OrderList());
                 do {
                     do {
-                        System.out
-                                .print("\nEnter Item ID(1 to checkout, 2 to edit order list, 3 to display products)> ");
+                        System.out.print("\nEnter Item ID(1 to checkout, 2 to edit order list, 3 to display products)> ");
                         productCode = scanner.nextLine();
 
                         // If the item list in order list is empty, it will show this output (Validate
