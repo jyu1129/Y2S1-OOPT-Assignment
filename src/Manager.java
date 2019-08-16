@@ -97,40 +97,40 @@ class Manager extends PersonDetails implements Serializable {
         double doubleBuf = 0;
 
         switch (choice) {
-        case 1:
-            System.out.print("Enter the new product name: ");
-            stringBuf = input.nextLine();
-            break;
-        case 2:
-            System.out.print("Enter the new product type: ");
-            stringBuf = input.nextLine();
-            break;
-        case 3:
-            do {
-                System.out.print("Enter the new stock quantity: ");
-                try {
-                    doubleBuf = input.nextDouble();
-                    break;
-                } catch (Exception e) {
-                    System.out.println("\nPlease enter a digit.");
-                    input.nextLine();
-                }
-            } while (true);
-            break;
-        case 4:
-            do {
-                System.out.print("Enter the new product price: RM ");
-                try {
-                    doubleBuf = input.nextDouble();
-                    break;
-                } catch (Exception e) {
-                    System.out.println("\nPlease enter a digit.");
-                    input.nextLine();
-                }
-            } while (true);
-            break;
-        default:
-            break;
+            case 1:
+                System.out.print("Enter the new product name: ");
+                stringBuf = input.nextLine();
+                break;
+            case 2:
+                System.out.print("Enter the new product type: ");
+                stringBuf = input.nextLine();
+                break;
+            case 3:
+                do {
+                    System.out.print("Enter the new stock quantity: ");
+                    try {
+                        doubleBuf = input.nextDouble();
+                        break;
+                    } catch (Exception e) {
+                        System.out.println("\nPlease enter a digit.");
+                        input.nextLine();
+                    }
+                } while (true);
+                break;
+            case 4:
+                do {
+                    System.out.print("Enter the new product price: RM ");
+                    try {
+                        doubleBuf = input.nextDouble();
+                        break;
+                    } catch (Exception e) {
+                        System.out.println("\nPlease enter a digit.");
+                        input.nextLine();
+                    }
+                } while (true);
+                break;
+            default:
+                break;
         }
 
         // Get confirmation from user then put the data into the database
@@ -147,24 +147,24 @@ class Manager extends PersonDetails implements Serializable {
 
         if (confirmation == 'Y') {
             switch (choice) {
-            case 1:
-                System.out.println();
-                product.get(i).setProdName(stringBuf);
-                break;
-            case 2:
-                System.out.println();
-                product.get(i).setProdType(stringBuf);
-                break;
-            case 3:
-                System.out.println();
-                product.get(i).setStockQuantity((int) doubleBuf);
-                break;
-            case 4:
-                System.out.println();
-                product.get(i).setPrice((int) doubleBuf);
-                break;
-            default:
-                System.out.println("Something went wrong.");
+                case 1:
+                    System.out.println();
+                    product.get(i).setProdName(stringBuf);
+                    break;
+                case 2:
+                    System.out.println();
+                    product.get(i).setProdType(stringBuf);
+                    break;
+                case 3:
+                    System.out.println();
+                    product.get(i).setStockQuantity((int) doubleBuf);
+                    break;
+                case 4:
+                    System.out.println();
+                    product.get(i).setPrice((int) doubleBuf);
+                    break;
+                default:
+                    System.out.println("Something went wrong.");
             }
             return true;
         }
@@ -192,7 +192,7 @@ class Manager extends PersonDetails implements Serializable {
 
         System.out.print("Product Type: ");
         prodType = input.nextLine();
-        prodName = Character.toUpperCase(prodType.charAt(0)) + prodType.substring(1);
+        prodType = Character.toUpperCase(prodType.charAt(0)) + prodType.substring(1);
 
         do {
             System.out.print("Stock Quantity: ");
@@ -225,7 +225,7 @@ class Manager extends PersonDetails implements Serializable {
         } while (confirmation != 'Y' && confirmation != 'N');
 
         if (confirmation == 'Y') {
-            product.add(new Product(prodName, prodType, price, stockQuantity));
+            product.add(new Product(productId, prodName, prodType, price, stockQuantity));
             return true;
         }
 
@@ -317,40 +317,40 @@ class Manager extends PersonDetails implements Serializable {
         char charBuf = 'M';
 
         switch (choice) {
-        case 1:
-            System.out.print("Enter the new Password: ");
-            stringBuf = input.nextLine();
-            break;
-        case 2:
-            System.out.print("Enter the new First Name: ");
-            stringBuf = input.nextLine();
-            stringBuf = Character.toUpperCase(stringBuf.charAt(0)) + stringBuf.substring(1);
-            break;
-        case 3:
-            System.out.print("Enter the new Last Name: ");
-            stringBuf = input.nextLine();
-            stringBuf = Character.toUpperCase(stringBuf.charAt(0)) + stringBuf.substring(1);
-            break;
-        case 4:
-            do {
-                System.out.print("Enter the new Gender (M/F) : ");
-                charBuf = input.next().charAt(0);
-            } while (!validGender(charBuf));
-            break;
-        case 5:
-            do {
-                System.out.print("Enter the new Phone No. (0123456789): ");
+            case 1:
+                System.out.print("Enter the new Password: ");
                 stringBuf = input.nextLine();
-            } while (!validPhoneNo(stringBuf));
-            break;
-        case 6:
-            do {
-                System.out.print("Enter the new Email: ");
+                break;
+            case 2:
+                System.out.print("Enter the new First Name: ");
                 stringBuf = input.nextLine();
-            } while (!validEmail(stringBuf));
-            break;
-        default:
-            break;
+                stringBuf = Character.toUpperCase(stringBuf.charAt(0)) + stringBuf.substring(1);
+                break;
+            case 3:
+                System.out.print("Enter the new Last Name: ");
+                stringBuf = input.nextLine();
+                stringBuf = Character.toUpperCase(stringBuf.charAt(0)) + stringBuf.substring(1);
+                break;
+            case 4:
+                do {
+                    System.out.print("Enter the new Gender (M/F) : ");
+                    charBuf = input.next().charAt(0);
+                } while (!validGender(charBuf));
+                break;
+            case 5:
+                do {
+                    System.out.print("Enter the new Phone No. (0123456789): ");
+                    stringBuf = input.nextLine();
+                } while (!validPhoneNo(stringBuf));
+                break;
+            case 6:
+                do {
+                    System.out.print("Enter the new Email: ");
+                    stringBuf = input.nextLine();
+                } while (!validEmail(stringBuf));
+                break;
+            default:
+                break;
         }
 
         // Get confirmation from user then put the data into the database
@@ -363,32 +363,32 @@ class Manager extends PersonDetails implements Serializable {
 
         if (confirmation == 'Y') {
             switch (choice) {
-            case 1:
-                System.out.println();
-                staff.get(i).setPassword(stringBuf);
-                break;
-            case 2:
-                System.out.println();
-                staff.get(i).setFirstName(stringBuf);
-                break;
-            case 3:
-                System.out.println();
-                staff.get(i).setLastName(stringBuf);
-                break;
-            case 4:
-                System.out.println();
-                staff.get(i).setGender(charBuf);
-                break;
-            case 5:
-                System.out.println();
-                staff.get(i).setPhoneNo(stringBuf);
-                break;
-            case 6:
-                System.out.println();
-                staff.get(i).setEmail(stringBuf);
-                break;
-            default:
-                System.out.println("Something went wrong.");
+                case 1:
+                    System.out.println();
+                    staff.get(i).setPassword(stringBuf);
+                    break;
+                case 2:
+                    System.out.println();
+                    staff.get(i).setFirstName(stringBuf);
+                    break;
+                case 3:
+                    System.out.println();
+                    staff.get(i).setLastName(stringBuf);
+                    break;
+                case 4:
+                    System.out.println();
+                    staff.get(i).setGender(charBuf);
+                    break;
+                case 5:
+                    System.out.println();
+                    staff.get(i).setPhoneNo(stringBuf);
+                    break;
+                case 6:
+                    System.out.println();
+                    staff.get(i).setEmail(stringBuf);
+                    break;
+                default:
+                    System.out.println("Something went wrong.");
             }
             return true;
         }
@@ -406,7 +406,7 @@ class Manager extends PersonDetails implements Serializable {
 
         // Prompt user to enter the detail of the new staff
         System.out.println("Staff does not exist, adding new staff.");
-        System.out.println("Staff ID: " + String.format("S%04d", Employee.getNextEmployeeID()));
+        System.out.println("Staff ID: " + String.format("S%04d", staff.size()+1));
 
         System.out.print("First Name: ");
         firstName = input.nextLine();
@@ -444,7 +444,7 @@ class Manager extends PersonDetails implements Serializable {
         // Get confirmation from user then put the data into the database
         char confirmation;
         do {
-            System.out.print("Do you really want to add the product? (Y/N): ");
+            System.out.print("Do you really want to add the staff? (Y/N): ");
             confirmation = input.next().toUpperCase().charAt(0);
             input.nextLine();
         } while (confirmation != 'Y' && confirmation != 'N');
@@ -481,17 +481,22 @@ class Manager extends PersonDetails implements Serializable {
             }
         }
 
+        double totalAmount = 0;
+
         System.out.println("Daily Report");
+        System.out.println("Date: " + orderList.get(0).getFormattedDate());
         System.out.println("----------------------------");
-        System.out.printf("%-4s%-20s%-30s%-20s%-20s%-10s\n", "No.", "Product ID", "Product Name", "Stock Quantity",
-                "Sold Out", "Unit Price");
+        System.out.printf("%-4s%-20s%-30s%-20s%-20s%-10s%-10s\n", "No.", "Product ID", "Product Name", "Stock Quantity",
+                "Sold Out", "Unit Price", "Amount");
         System.out.println(
                 "----------------------------------------------------------------------------------------------------------------");
         for (int i = 0; i < products.size(); i++) {
-            System.out.format("%-4d%-20s%-30s%-20d%-20d%-10.2f\n", i + 1, products.get(i).getProdId(),
+            System.out.format("%-4d%-20s%-30s%-20d%-20d%-10.2f%-10.2f\n", i + 1, products.get(i).getProdId(),
                     products.get(i).getProdName(), products.get(i).getStockQuantity(), soldQuantity[i],
-                    products.get(i).getPrice());
+                    products.get(i).getPrice(), products.get(i).getPrice()*soldQuantity[i]);
+            totalAmount += (products.get(i).getPrice()*soldQuantity[i]);
         }
+        System.out.printf("Total: %-17s%-30s%-20s%-20s%-10s%-10.2f\n", "","","","","",totalAmount);
     }
 
     // Getter
@@ -527,70 +532,70 @@ class Manager extends PersonDetails implements Serializable {
                 + gender + ", phoneNo='" + phoneNo + '\'' + ", email='" + email + '\'' + ", icNo='" + icNo + '\'' + '}';
     }
 
-        // Validation
-        private boolean validGender(char input) {
-            if (input == 'M' || input == 'F') {
-                return true;
-            } else {
-                System.out.println("\nPlease enter \'M\' or \'F\'.");
-                return false;
-            }
-        }
-    
-        private boolean validPhoneNo(String input) {
-            for (int i = 0; i < input.length(); i++) {
-                if (!Character.isDigit(input.charAt(0))) {
-                    System.out.println("\nPlease enter digit only.");
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-            System.out.println("Something went wrong.");
+    // Validation
+    private boolean validGender(char input) {
+        if (input == 'M' || input == 'F') {
+            return true;
+        } else {
+            System.out.println("\nPlease enter \'M\' or \'F\'.");
             return false;
         }
-    
-        private boolean validEmail(String input) {
-            int atCounter = 0;
-            int dotCounter = 0;
-            for (int i = 0; i < input.length(); i++) {
-                if (input.charAt(i) == '@') {
-                    atCounter++;
-                }
-                if (input.charAt(i) == '.') {
-                    dotCounter++;
-                }
-            }
-            if (atCounter != 1 || dotCounter != 1) {
-                System.out.println("\nPlease enter a valid email (address@domain.com).");
+    }
+
+    private boolean validPhoneNo(String input) {
+        for (int i = 0; i < input.length(); i++) {
+            if (!Character.isDigit(input.charAt(0))) {
+                System.out.println("\nPlease enter digit only.");
                 return false;
             } else {
                 return true;
             }
         }
-    
-        private int promptChoice(int max){
-            int choice = -1;
-            boolean valid = false;
-            Scanner input = new Scanner(System.in);
-    
-            do {
-                System.out.print("Enter a number: ");
-                try {
-                    choice = input.nextInt();
-                    input.nextLine();
-                    if(choice > max || choice < 1){
-                        System.out.println("\nPlease enter a number between 1 and " + max + ".");
-                        choice = -1;
-                    }
-                    valid = true;
-                } catch (Exception e) {
-                    System.out.println("Please enter a valid number.\n");
-                    input.nextLine();
+        System.out.println("Something went wrong.");
+        return false;
+    }
+
+    private boolean validEmail(String input) {
+        int atCounter = 0;
+        int dotCounter = 0;
+        for (int i = 0; i < input.length(); i++) {
+            if (input.charAt(i) == '@') {
+                atCounter++;
+            }
+            if (input.charAt(i) == '.') {
+                dotCounter++;
+            }
+        }
+        if (atCounter != 1 || dotCounter != 1) {
+            System.out.println("\nPlease enter a valid email (address@domain.com).");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private int promptChoice(int max){
+        int choice = -1;
+        boolean valid = false;
+        Scanner input = new Scanner(System.in);
+
+        do {
+            System.out.print("Enter a number: ");
+            try {
+                choice = input.nextInt();
+                input.nextLine();
+                if(choice > max || choice < 1){
+                    System.out.println("\nPlease enter a number between 1 and " + max + ".");
                     choice = -1;
                 }
-            } while(!valid);
-    
-            return choice;
-        }    
+                valid = true;
+            } catch (Exception e) {
+                System.out.println("Please enter a valid number.\n");
+                input.nextLine();
+                choice = -1;
+            }
+        } while(!valid);
+
+        return choice;
+    }
 }

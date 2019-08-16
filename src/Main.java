@@ -88,8 +88,6 @@ public class Main {
             }
 
             for (int i = 0; i < count; i++) {
-                // for(int j = 0; j < count; j++)
-                // userName = new String[count];
                 userName[i] = username;
             }
 

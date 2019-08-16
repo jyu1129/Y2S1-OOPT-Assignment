@@ -19,6 +19,15 @@ class Product implements Serializable {
         this.price = price;
     }
 
+    public Product(String prodId, String prodName, String prodType, double price, int stockQuantity) {
+        this.prodId = prodId;
+        this.prodName = prodName;
+        this.prodType = prodType;
+        this.stockQuantity = stockQuantity;
+        this.price = price;
+    }
+
+
     // Constructor without stockQuantity only
     public Product(String prodName, String prodType, double price) {
         this(prodName, prodType, price, 0);
