@@ -530,4 +530,71 @@ class Manager extends PersonDetails implements Serializable {
                 + jobTitle + '\'' + ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\'' + ", gender="
                 + gender + ", phoneNo='" + phoneNo + '\'' + ", email='" + email + '\'' + ", icNo='" + icNo + '\'' + '}';
     }
+
+        // Validation
+        private boolean validGender(char input) {
+            if (input == 'M' || input == 'F') {
+                return true;
+            } else {
+                System.out.println("\nPlease enter \'M\' or \'F\'.");
+                return false;
+            }
+        }
+    
+        private boolean validPhoneNo(String input) {
+            for (int i = 0; i < input.length(); i++) {
+                if (!Character.isDigit(input.charAt(0))) {
+                    System.out.println("\nPlease enter digit only.");
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+            System.out.println("Something went wrong.");
+            return false;
+        }
+    
+        private boolean validEmail(String input) {
+            int atCounter = 0;
+            int dotCounter = 0;
+            for (int i = 0; i < input.length(); i++) {
+                if (input.charAt(i) == '@') {
+                    atCounter++;
+                }
+                if (input.charAt(i) == '.') {
+                    dotCounter++;
+                }
+            }
+            if (atCounter != 1 || dotCounter != 1) {
+                System.out.println("\nPlease enter a valid email (address@domain.com).");
+                return false;
+            } else {
+                return true;
+            }
+        }
+    
+        private int promptChoice(int max){
+            int choice = -1;
+            boolean valid = false;
+            Scanner input = new Scanner(System.in);
+    
+            do {
+                System.out.print("Enter a number: ");
+                try {
+                    choice = input.nextInt();
+                    input.nextLine();
+                    if(choice > max || choice < 1){
+                        System.out.println("\nPlease enter a number between 1 and " + max + ".");
+                        choice = -1;
+                    }
+                    valid = true;
+                } catch (Exception e) {
+                    System.out.println("Please enter a valid number.\n");
+                    input.nextLine();
+                    choice = -1;
+                }
+            } while(!valid);
+    
+            return choice;
+        }    
 }
