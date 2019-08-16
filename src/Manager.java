@@ -405,11 +405,13 @@ class Manager extends PersonDetails implements Serializable {
             soldQuantity[i] = 0;
         }
 
+        System.out.println(orderList.size());
+
         for(int i = 0; i < products.size(); i++){
             for(int j = 0; j < orderList.size(); j++){
-                for(int k = 0; k < orderList.size(); k++){
+                for(int k = 0; k < orderList.get(j).getOrderItem().size(); k++){
                     if(orderList.get(j).getOrderItem().get(k).getProduct().getProdId().equals(products.get(i).getProdId())){
-                        soldQuantity[i] += orderList.get(i).getOrderItem().get(k).getQuantity();
+                        soldQuantity[i] += orderList.get(j).getOrderItem().get(k).getQuantity();
                     }
                 }
             }
