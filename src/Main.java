@@ -58,6 +58,11 @@ public class Main {
             e.printStackTrace();
         }
 
+        //Reassign static value
+        OrderList.setNextOrderNo(orderLists.size() + 1);
+        Employee.setNextEmployeeID(employees.size() + 1);
+        Product.setNextProdId(product.size() + 1);
+
         bootupScreen();
 
         do {
@@ -101,7 +106,7 @@ public class Main {
                             + employees.get(empLogin.getIndex()).getFirstName() + " "
                             + employees.get(empLogin.getIndex()).getLastName());
                     System.out.println(empLogin.getUsername() + " has login at " + empLogin.currentTime() + "\n");
-                    employeeMenuOptions(orderItem, orderLists);
+                    employeeMenuOptions(orderItem, orderLists, product);
                 } else {
                     System.out.println("Login failed.");
                 }
@@ -114,7 +119,7 @@ public class Main {
                     System.out.println("Username: " + mgrLogin.getUsername() + "\nManager Name: "
                             + employees.get(mgrLogin.getIndex()).getFirstName() + " "
                             + employees.get(mgrLogin.getIndex()).getLastName());
-                    managerMenuOptions(product, employees, orderLists);
+                    managerMenuOptions(product, employees, orderItem, orderLists);
                 } else {
                     System.out.println("Login failed.");
                 }
@@ -153,7 +158,7 @@ public class Main {
     }
 
     // Menu Options for employees
-    private static void employeeMenuOptions(ArrayList<OrderItem> orderItem, ArrayList<OrderList> orderLists) {
+    private static void employeeMenuOptions(ArrayList<OrderItem> orderItem, ArrayList<OrderList> orderLists, ArrayList<Product> products) {
         Scanner scanner = new Scanner(System.in);
         String productCode;
         Employee employee = new Employee();
@@ -201,6 +206,11 @@ public class Main {
 
                 // After checking out, it goes to payment
                 employee.payment(orderLists.get(orderLists.size() - 1));
+                //Update products details with order items details
+                for(int i = 0; i < products.size(); i++){
+                    //Equivalent to products[i] = orderItem[i].getProduct();
+                    products.set(i, orderItem.get(i).getProduct());
+                }
                 break;
             case 2:
                 if (orderLists.size() != 0) {
@@ -223,7 +233,7 @@ public class Main {
         } while (menuOption != 3);
     }
 
-    private static void managerMenuOptions(ArrayList<Product> products, ArrayList<Employee> employees,
+    private static void managerMenuOptions(ArrayList<Product> products, ArrayList<Employee> employees, ArrayList<OrderItem> orderItems,
             ArrayList<OrderList> orderLists) {
         Scanner scanner = new Scanner(System.in);
         Manager manager = new Manager();
@@ -247,7 +257,10 @@ public class Main {
             }
             switch (menuOption) {
             case 1:
-                manager.modifyProduct(products);
+                manager.modifyProduct(products, orderItems);
+                for(int i = 0; i < products.size(); i++){
+                    orderItems.get(i).setProduct(products.get(i));
+                }
                 break;
             case 2:
                 manager.modifyStaff(employees);

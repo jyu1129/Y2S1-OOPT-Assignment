@@ -19,7 +19,7 @@ class Manager extends PersonDetails implements Serializable {
     }
 
     // Add or edit product...
-    public boolean modifyProduct(ArrayList<Product> product) {
+    public boolean modifyProduct(ArrayList<Product> product, ArrayList<OrderItem> orderItems) {
         Scanner input = new Scanner(System.in);
         boolean valid;
         String enteredProductId;
@@ -60,7 +60,7 @@ class Manager extends PersonDetails implements Serializable {
 
         // If product does not exist, add product using the given product ID
         else {
-            if (addProduct(enteredProductId, product)) {
+            if (addProduct(enteredProductId, product, orderItems)) {
                 System.out.println("Product added successfully.\n");
                 return true;
             } else {
@@ -176,7 +176,7 @@ class Manager extends PersonDetails implements Serializable {
     }
 
     // Sub-method for modifyProduct method, return true if added successfully
-    private boolean addProduct(String productId, ArrayList<Product> product) {
+    private boolean addProduct(String productId, ArrayList<Product> product, ArrayList<OrderItem> orderItems) {
         Scanner input = new Scanner(System.in);
         String prodName, prodType;
         int stockQuantity;
@@ -226,6 +226,7 @@ class Manager extends PersonDetails implements Serializable {
 
         if (confirmation == 'Y') {
             product.add(new Product(productId, prodName, prodType, price, stockQuantity));
+            orderItems.add(new OrderItem(product.get(product.size() - 1)));
             return true;
         }
 
@@ -486,12 +487,12 @@ class Manager extends PersonDetails implements Serializable {
         System.out.println("Daily Report");
         System.out.println("Date: " + orderList.get(0).getFormattedDate());
         System.out.println("----------------------------");
-        System.out.printf("%-4s%-20s%-30s%-20s%-20s%-10s%-10s\n", "No.", "Product ID", "Product Name", "Stock Quantity",
+        System.out.printf("%-4s%-20s%-30s%-20s%-20s%-10s%-11s\n", "No.", "Product ID", "Product Name", "Stock Quantity",
                 "Sold Out", "Unit Price", "Amount");
         System.out.println(
                 "----------------------------------------------------------------------------------------------------------------");
         for (int i = 0; i < products.size(); i++) {
-            System.out.format("%-4d%-20s%-30s%-20d%-20d%-10.2f%-10.2f\n", i + 1, products.get(i).getProdId(),
+            System.out.format("%-4d%-20s%-30s%-20d%-20d%-10.2f%-11.2f\n", i + 1, products.get(i).getProdId(),
                     products.get(i).getProdName(), products.get(i).getStockQuantity(), soldQuantity[i],
                     products.get(i).getPrice(), products.get(i).getPrice()*soldQuantity[i]);
             totalAmount += (products.get(i).getPrice()*soldQuantity[i]);

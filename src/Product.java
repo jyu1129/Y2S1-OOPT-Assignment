@@ -95,5 +95,4 @@ class Product implements Serializable {
                 "Product: {Product ID: %s\nProduct Name: %s\nProduct Type: %s\nStock Quantity: %d\nPrice: RM %,.2fea\n}", prodId,
                 prodName, prodType, stockQuantity, price);
     }
-
 }

@@ -155,6 +155,10 @@ class Employee extends PersonDetails implements Serializable {
         this.branch = branch;
     }
 
+    public static void setNextEmployeeID(int nextEmployeeID) {
+        Employee.nextEmployeeID = nextEmployeeID;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
