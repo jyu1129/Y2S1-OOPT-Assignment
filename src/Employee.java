@@ -150,6 +150,7 @@ class Employee extends PersonDetails implements Serializable {
             try{
                 selection = scanner.nextInt();
                 if(selection < 1 || selection > orderLists.size()){
+                    System.out.println("Please enter a valid number\n");
                     valid = false;
                 } else {
                     valid = true;
