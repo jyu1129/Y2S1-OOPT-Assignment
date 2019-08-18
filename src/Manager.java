@@ -31,10 +31,12 @@ class Manager extends PersonDetails implements Serializable {
 
             // Validate the entered product ID
             if (enteredProductId.length() != 5) {
-                System.out.println("Not a valid product ID.");
+                System.out.println("Not a valid product ID.\n");
                 valid = false;
-            } else
-                valid = true;
+            } else if(enteredProductId.charAt(0) != 'P') {
+                System.out.println("Not a valid product ID.\n");
+                valid = false;
+            } else valid = true;
         } while (!valid);
 
         // Check if the product exists
@@ -60,7 +62,7 @@ class Manager extends PersonDetails implements Serializable {
 
         // If product does not exist, add product using the given product ID
         else {
-            if (addProduct(enteredProductId, product, orderItems)) {
+            if (addProduct(product, orderItems)) {
                 System.out.println("Product added successfully.\n");
                 return true;
             } else {
@@ -176,7 +178,7 @@ class Manager extends PersonDetails implements Serializable {
     }
 
     // Sub-method for modifyProduct method, return true if added successfully
-    private boolean addProduct(String productId, ArrayList<Product> product, ArrayList<OrderItem> orderItems) {
+    private boolean addProduct(ArrayList<Product> product, ArrayList<OrderItem> orderItems) {
         Scanner input = new Scanner(System.in);
         String prodName, prodType;
         int stockQuantity;
@@ -184,7 +186,7 @@ class Manager extends PersonDetails implements Serializable {
 
         // Prompt user to enter the detail of the new product
         System.out.println("Product does not exist, adding new product.");
-        System.out.println("Product ID: " + productId);
+        System.out.println("Product ID: " + String.format("P%04d",Product.getNextProdId()));
 
         System.out.print("Product Name: ");
         prodName = input.nextLine();
@@ -225,7 +227,7 @@ class Manager extends PersonDetails implements Serializable {
         } while (confirmation != 'Y' && confirmation != 'N');
 
         if (confirmation == 'Y') {
-            product.add(new Product(productId, prodName, prodType, price, stockQuantity));
+            product.add(new Product(prodName, prodType, price, stockQuantity));
             orderItems.add(new OrderItem(product.get(product.size() - 1)));
             return true;
         }
@@ -249,10 +251,12 @@ class Manager extends PersonDetails implements Serializable {
 
             // Validate the entered product ID
             if (enteredStaffId.length() != 5) {
-                System.out.println("Not a valid employees ID.");
+                System.out.println("Not a valid employee ID.\n");
                 valid = false;
-            } else
-                valid = true;
+            } else if (enteredStaffId.charAt(0) != 'S'){
+                System.out.println("Not a valid employee ID.\n");
+                valid = false;
+            }else valid = true;
         } while (!valid);
 
         // Check if the employees exists
@@ -469,7 +473,10 @@ class Manager extends PersonDetails implements Serializable {
             soldQuantity[i] = 0;
         }
 
-        System.out.println(orderList.size());
+        if (orderList.size() < 1 ){
+            System.out.println("No order is exist.\n");
+            return;
+        }
 
         for (int i = 0; i < products.size(); i++) {
             for (int j = 0; j < orderList.size(); j++) {

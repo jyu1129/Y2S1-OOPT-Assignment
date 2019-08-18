@@ -88,6 +88,10 @@ class Product implements Serializable {
         return price;
     }
 
+    public static int getNextProdId() {
+        return nextProdId;
+    }
+
     // Methods
     @Override
     public String toString() {

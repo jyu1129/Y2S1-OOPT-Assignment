@@ -108,7 +108,7 @@ public class Main {
                     System.out.println(empLogin.getUsername() + " has login at " + empLogin.currentTime() + "\n");
                     employeeMenuOptions(orderItem, orderLists, product);
                 } else {
-                    System.out.println("Login failed.");
+                    System.out.println("Login failed.\n");
                 }
                 break;
             case 2:
@@ -121,7 +121,7 @@ public class Main {
                             + employees.get(mgrLogin.getIndex()).getLastName());
                     managerMenuOptions(product, employees, orderItem, orderLists);
                 } else {
-                    System.out.println("Login failed.");
+                    System.out.println("Login failed.\n");
                 }
                 break;
             case 0:
@@ -137,7 +137,7 @@ public class Main {
                 System.exit(0);
                 break;
             default:
-                System.out.println("No such option!");
+                System.out.println("No such option!\n");
                 break;
             }
         } while (true);
@@ -216,7 +216,7 @@ public class Main {
                 if (orderLists.size() != 0) {
                     employee.displayTransactionHistory(orderLists);
                 } else {
-                    System.out.println("No Transaction History!");
+                    System.out.println("No Transaction History!\n");
                 }
                 break;
             case 3:
@@ -227,7 +227,7 @@ public class Main {
                 }
                 break;
             default:
-                System.out.println("No such option!");
+                System.out.println("No such option!\n");
                 break;
             }
         } while (menuOption != 3);
@@ -271,7 +271,7 @@ public class Main {
             case 4:
                 break;
             default:
-                System.out.println("No such option!");
+                System.out.println("No such option!\n");
                 break;
             }
         } while (menuOption != 4);
